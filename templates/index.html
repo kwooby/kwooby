@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mile Tracker</title>
+</head>
+<body>
+    <form method="POST" action="/log-details">
+        <label for="activity">Activity</label>
+        <input id="activity" name="activity" type="text">
+
+        <label for="miles">Miles</label>
+        <input id="miles" name="miles" type="number" min="0" max="10">
+
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" min="2026-01-01" max="2526-01-01">
+
+        <button type="submit">Save</button>
+    </form>
+
+    <form method="POST" action="/log-photos" enctype="multipart/form-data">
+
+        <label for="upload_photos"></label>
+        <input id="upload_photos" name="upload_photos" type="file">
+
+        <button type="submit">Save Photo</button>
+    </form>
+</body>
+
+</html>
