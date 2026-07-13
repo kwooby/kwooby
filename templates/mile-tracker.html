@@ -10,6 +10,7 @@
     <h1>A Mile Tracker for my Wife!!</h1>
 
     <h2>Details of your Run</h2>
+    <p class="required">Required</p>
 
     <form method="POST" action="/log-details">
         <label for="activity">Activity</label>
@@ -25,9 +26,11 @@
     </form>
 
     <h2>Did you see any kitties today></h2>
+    <p class="optional">Optional</p>
+
     <form method="POST" action="/log-photos" enctype="multipart/form-data">
 
-        <label for="log_photos"></label>
+        <label for="log_photos">Log Photos</label>
         <input id="log_photos" name="log_photos" type="file">
 
         <button type="submit">Save Photo</button>

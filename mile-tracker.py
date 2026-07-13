@@ -27,7 +27,7 @@ def create_table():
     connection.execute("""
         CREATE TABLE IF NOT EXISTS cats (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            image_filename TEXT
+            photo_filename TEXT
         )
     """)
 
@@ -44,7 +44,7 @@ def login():
 
     if password == PASSWORD:
         session["authenticated"] = True
-        return redirect("/mile-tracker")
+        return redirect("/home")
     
     return render_template("index.html", error="Wrong Password")
 
@@ -91,7 +91,7 @@ def log_photos():
     photo = request.files["log_photos"]
     photo.save(f"static/images/{photo.filename}")
 
-    return "Photo stored in the archive"
+    return "Photo stored in archive"
 
 if __name__ == "__main__":
     create_table()

@@ -7,9 +7,16 @@
     <title>Mile Tracker</title>
 </head>
 <body>
-    {% for run in runs%}
-        <p>{{ run["activity"] }} - {{ run["miles"] }} miles - {{ run["run_date"] }}<p>
-    {% endfor %}
+    <h1>History</h1>
+
+    <h2>History of Runs</h1>
+    <p>All the details of your runs are here</p>
+
+    <span class="history of runs">
+        {% for run in runs%}
+            <p>{{ run["activity"] }} - {{ run["miles"] }} miles - {{ run["run_date"] }}<p>
+        {% endfor %}
+    </span>
 </body>
 
 </html>
