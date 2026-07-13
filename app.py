@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = os.environ.get("test-secret-key")
 
 PASSWORD = os.environ.get("PASSWORD")
 
@@ -92,21 +92,21 @@ def log_photos():
     photo = request.files["log_photos"]
 
     filename = secure_filename(photo.filename)
-    photo.save(f"static/images/{photo.filename}")
+    photo.save(f"static/images/{filename}")
 
     connection = get_db_connection()
 
     connection.execute("""
         INSERT INTO cats (photo_filename)
         VALUES (?)
-    """, (photo.filename,))
+    """, (filename,))
 
     connection.commit()
     connection.close()
 
     return "Photo stored in archive"
 
-@app.route("/")
+@app.route("/photos")
 def display_photos():
     if not session.get("authenticated"):
         return redirect("/")
@@ -118,6 +118,8 @@ def display_photos():
     """).fetchall()
 
     connection.close()
+
+    return render_template("photos.html", photos=photos)
 
 if __name__ == "__main__":
     create_table()
