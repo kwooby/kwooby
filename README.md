@@ -1,6 +1,15 @@
 # Mile-Tracker README
 
 *This is not the README for my personal website setup! This README is just for the mile-tracker project!
+
+.
+07/13/2026
+
+MAJOR:
+
+MINOR:
+    -Code cleanup
+
 .
 07/12/2026
 

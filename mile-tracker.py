@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from flask import Flask, render_template, request, session, redirect
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -89,9 +90,34 @@ def log_photos():
         return redirect("/")
     
     photo = request.files["log_photos"]
+
+    filename = secure_filename(photo.filename)
     photo.save(f"static/images/{photo.filename}")
 
+    connection = get_db_connection()
+
+    connection.execute("""
+        INSERT INTO cats (photo_filename)
+        VALUES (?)
+    """, (photo.filename,))
+
+    connection.commit()
+    connection.close()
+
     return "Photo stored in archive"
+
+@app.route("/")
+def display_photos():
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    connection = get_db_connection()
+
+    photos = connection.execute("""
+        SELECT * FROM cats
+    """).fetchall()
+
+    connection.close()
 
 if __name__ == "__main__":
     create_table()
