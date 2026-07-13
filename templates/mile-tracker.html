@@ -7,32 +7,61 @@
     <title>Mile Tracker</title>
 </head>
 <body>
+
+    <header>
+        <nav>
+            <a href ="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('mile-tracker') }}">Mile Tracker For my Wife</a>
+        </nav>
+    </header>
+    
+    <main>
     <h1>A Mile Tracker for my Wife!!</h1>
 
     <h2>Details of your Run</h2>
-    <p class="required">Required</p>
+    <p class="required">Required!!</p>
 
     <form method="POST" action="/log-details">
-        <label for="activity">Activity</label>
-        <input id="activity" name="activity" type="text" required>
 
-        <label for="miles">Miles</label>
+        <label for="activity">Activity: </label>
+        <label>
+            <input id="activity" name="activity" type="radio" value="Run" required>
+            Run
+        </label>
+        <label>
+            <input id="activity" name="activity" type="radio" value="Walk" required>
+            Walk
+        </label>
+        <br>
+
+        <label for="miles">Miles: </label>
         <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
 
-        <label for="run_date">Date</label>
+        <br>
+
+        <label for="run_date">Date: </label>
         <input id="run_date" name="run_date" type="date" required>
 
-        <button type="submit">Save</button>
+        <br>
+        <br>
+
+        <button type="submit">Save Run Details</button>
     </form>
 
-    <h2>Did you see any kitties today></h2>
-    <p class="optional">Optional</p>
+    <br>
+
+    <h2>Did you see any kitties today?</h2>
 
     <form method="POST" action="/log-photos" enctype="multipart/form-data">
 
-        <label for="log_photos">Log Photos</label>
+        <label for="log_photos">Log Photos: </label>
+        <br>
+        <br>
         <input id="log_photos" name="log_photos" type="file">
 
+        <br>
+        <br>
+        
         <button type="submit">Save Photo</button>
     </form>
 </body>

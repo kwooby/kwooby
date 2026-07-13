@@ -9,15 +9,17 @@
 
 <body>
 
-    <h1>Kwooby</h1>
+    <h1>Login to View Kwooby</h1>
 
-    <form method="POST" action="/login">
+    <main>
+        <form method="POST" action="/login">
     
-        <label for="password">Password:</label>
-        <input id="password" name="password" type="password" required>
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password" required>
 
-        <button type="submit">Enter</button>
-    </form>
+            <button type="submit">Enter</button>
+        </form>
+    </main>
 
     {% if error %}
         <p>{{ error }}</p>

@@ -6,9 +6,23 @@
 07/13/2026
 
 MAJOR:
+    -Connected with Render to official domain
+    -Added home.html
+    -Added basic navigation between home and mile tracker
 
 MINOR:
     -Code cleanup
+    -Password fixed
+    -Renamed mile-tracker.py to app.py for transparency with framework
+    -Removed requirements.txt from gitignore and manually added gunicorn 26.0.0
+
+TO DO:
+    -Logout feature
+    -Refactor for template inheritence
+    -Add feature that gives a random uploaded photo from uploaded photos
+    -Add gallery of all uploaded photos
+    -Tidy up html pages
+    -CSS
 
 .
 07/12/2026

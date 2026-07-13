@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-app.secret_key = "change-this-later"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 PASSWORD = os.environ.get("PASSWORD")
 
@@ -70,7 +70,7 @@ def log_details():
     
     activity = request.form["activity"]
     miles = float(request.form["miles"])
-    run_date = request.form["date"]
+    run_date = request.form["run_date"]
 
     connection = get_db_connection()
 
@@ -121,4 +121,4 @@ def display_photos():
 
 if __name__ == "__main__":
     create_table()
-    app.run(debug=True)
+    app.run()
