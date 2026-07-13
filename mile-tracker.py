@@ -1,8 +1,12 @@
-from flask import Flask, render_template
 import sqlite3
-from datetime import date
+import os
+from flask import Flask, render_template, request, session, redirect
 
-mile_tracker = Flask(__name__)
+app = Flask(__name__)
+
+app.secret_key = "change-this-later"
+
+PASSWORD = os.environ.get("PASSWORD")
 
 def get_db_connection():
     connection = sqlite3.connect("miles.db")
@@ -14,15 +18,15 @@ def create_table():
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS runs (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             activity TEXT NOT NULL,
             miles REAL NOT NULL,
-            date TEXT NOT NULL
+            run_date TEXT NOT NULL
         )
     """)
     connection.execute("""
         CREATE TABLE IF NOT EXISTS cats (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             image_filename TEXT
         )
     """)
@@ -30,22 +34,65 @@ def create_table():
     connection.commit()
     connection.close()
 
-@mile_tracker.route("/log-details", methods=["POST"])
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/login", methods=["POST"])
+def login():
+    password = request.form["password"]
+
+    if password == PASSWORD:
+        session["authenticated"] = True
+        return redirect("/mile-tracker")
+    
+    return render_template("index.html", error="Wrong Password")
+
+@app.route("/home")
+def home():
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    return render_template("home.html")
+
+@app.route("/mile-tracker")
+def mile_tracker():
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    return render_template("mile-tracker.html")
+
+@app.route("/log-details", methods=["POST"])
 def log_details():
-    # run data here
-    today = str(date.today())
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    activity = request.form["activity"]
+    miles = float(request.form["miles"])
+    run_date = request.form["date"]
+
+    connection = get_db_connection()
+
+    connection.execute("""
+        INSERT INTO runs (activity, miles, run_date)
+        VALUES (?, ?, ?)
+    """, (activity, miles, run_date))
+
+    connection.commit()
+    connection.close()
 
     return "Miles logged"
 
-@mile_tracker.route("/log-photos", methods=["POST"])
+@app.route("/log-photos", methods=["POST"])
 def log_photos():
-    # save photo here
-    return "Photo stored in the archive"
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    photo = request.files["log_photos"]
+    photo.save(f"static/images/{photo.filename}")
 
-@mile_tracker.route("/")
-def home():
-    return render_template("index.html")
+    return "Photo stored in the archive"
 
 if __name__ == "__main__":
     create_table()
-    mile_tracker.run(debug=True)
+    app.run(debug=True)

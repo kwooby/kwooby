@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mile Tracker</title>
+</head>
+<body>
+    <h1>A Mile Tracker for my Wife!!</h1>
+
+    <h2>Details of your Run</h2>
+
+    <form method="POST" action="/log-details">
+        <label for="activity">Activity</label>
+        <input id="activity" name="activity" type="text" required>
+
+        <label for="miles">Miles</label>
+        <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
+
+        <label for="run_date">Date</label>
+        <input id="run_date" name="run_date" type="date" required>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <h2>Did you see any kitties today></h2>
+    <form method="POST" action="/log-photos" enctype="multipart/form-data">
+
+        <label for="log_photos"></label>
+        <input id="log_photos" name="log_photos" type="file">
+
+        <button type="submit">Save Photo</button>
+    </form>
+</body>
+
+</html>

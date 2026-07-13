@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mile Tracker</title>
+    <title>Kwooby</title>
 </head>
+
 <body>
-    <form method="POST" action="/log-details">
-        <label for="activity">Activity</label>
-        <input id="activity" name="activity" type="text">
 
-        <label for="miles">Miles</label>
-        <input id="miles" name="miles" type="number" min="0" max="10">
+    <h1>Kwooby</h1>
 
-        <label for="date">Date</label>
-        <input id="date" name="date" type="date" min="2026-01-01" max="2526-01-01">
+    <form method="POST" action="/login">
+        <label for="password">Password:</label>
 
-        <button type="submit">Save</button>
+        <input 
+            id="password"
+            name="password"
+            type="password"
+            required
+        >
+
+        <button type="submit">Enter</button>
     </form>
 
-    <form method="POST" action="/log-photos" enctype="multipart/form-data">
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
 
-        <label for="upload_photos"></label>
-        <input id="upload_photos" name="upload_photos" type="file">
-
-        <button type="submit">Save Photo</button>
-    </form>
 </body>
 
 </html>

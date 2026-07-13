@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mile Tracker</title>
+</head>
+<body>
+    {% for run in runs%}
+        <p>{{ run["activity"] }} - {{ run["miles"] }} miles - {{ run["run_date"] }}<p>
+    {% endfor %}
+</body>
+
+</html>
