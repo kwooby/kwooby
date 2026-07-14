@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get("test-secret-key")
+app.secret_key = os.environ.get("SECRET_KEY")
 
 PASSWORD = os.environ.get("PASSWORD")
 
