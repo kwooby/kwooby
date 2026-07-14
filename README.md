@@ -17,6 +17,11 @@ MINOR:
     -Removed requirements.txt from gitignore and manually added gunicorn 26.0.0
 
 TO DO:
+
+    MAJOR:
+    -Fix Internal Server Error after login
+    
+    MINOR:
     -Logout feature
     -Refactor for template inheritence
     -Add feature that gives a random uploaded photo from uploaded photos
