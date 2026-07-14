@@ -56,7 +56,7 @@
             <p>{{ run["activity"] }} - {{ run["miles"] }} miles - {{ run["run_date"] }}<p>
         {% endfor %}
 
-        <form class="filter-by-activity" method="GET" action="{{ url_for('miles_tracker') }}">
+        <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
             
             <label for="activity">Filter by Activity</label>
             <select name="activity" id="activity">
