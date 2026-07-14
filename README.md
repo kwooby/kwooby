@@ -1,6 +1,23 @@
 # Mile-Tracker README
 
-*This is not the README for my personal website setup! This README is just for the mile-tracker project!
+*This README is focusing on creation and deployment of my website as well as
+
+.
+07/14/2026
+
+MAJOR:
+    -Fixed Internal Server Error!
+        -Bad url end point for url build (miles-tracker -> miles_tracker)
+    -Added filtering feature to mile-tracker.html to sort through selected activity
+
+TO DO:
+    -Display filered results
+    -Logout feature
+    -Refactor for template inheritence
+    -Add feature that gives a random uploaded photo from uploaded photos
+    -Add gallery of all uploaded photos
+    -Tidy up html pages
+    -CSS
 
 .
 07/13/2026

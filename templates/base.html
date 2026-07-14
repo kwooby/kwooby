@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | Kwooby</title>
+</head>
+
+<body>
+<header>
+    <nav>
+        <ul class="nav-bar">
+            <li><a href ="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('mile_tracker') }}">Mile Tracker For my Wife</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <p>Kwoobster</p>
+</footer>
+</body>
+
+</html>

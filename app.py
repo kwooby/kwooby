@@ -61,7 +61,23 @@ def mile_tracker():
     if not session.get("authenticated"):
         return redirect("/")
     
-    return render_template("mile-tracker.html")
+    activity = request.args.get("activity")
+
+    connection = get_db_connection()
+
+    if activity:
+        runs = connection.execute("""
+            SELECT * FROM runs
+            WHERE activity = ?
+        """, (activity,)).fetchall()
+    else:
+        runs = connection.execute("""
+            SELECT * FROM runs
+        """).fetchall()
+
+    connection.close()
+    
+    return render_template("mile-tracker.html", runs=runs)
 
 @app.route("/log-details", methods=["POST"])
 def log_details():
