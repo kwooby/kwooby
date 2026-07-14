@@ -1,23 +1,32 @@
 # Mile-Tracker README
 
-*This README is focusing on creation and deployment of my website as well as
+## CURRENT STATUS
+
+Currently deployed and functional.
+Working on improving mile tracking features and styling.
 
 .
 07/14/2026
 
 MAJOR:
-    -Fixed Internal Server Error!
+    -Fixed Internal Server Error! *!YAY!*
         -Bad url end point for url build (miles-tracker -> miles_tracker)
-    -Added filtering feature to mile-tracker.html to sort through selected activity
+    -Added filtering functionality to mile tracker to sort through a selected activity
+    -Refactored html for template inheritence
+    -Basic CSS styling
+
+MINOR:
+    -Minor bug fixes
+    -Deleted 'history.html'
+        -combined history with mile-tracker page, it feels cleaner
 
 TO DO:
     -Display filered results
     -Logout feature
-    -Refactor for template inheritence
     -Add feature that gives a random uploaded photo from uploaded photos
     -Add gallery of all uploaded photos
     -Tidy up html pages
-    -CSS
+    -Further CSS styling
 
 .
 07/13/2026
@@ -49,7 +58,7 @@ TO DO:
 .
 07/12/2026
 
-START:
+INITIAL SETUP:
 -Initial commit
 -README and gitignore setup
 -Basic git setup
