@@ -1,12 +1,13 @@
 import sqlite3
 import os
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, session, redirect
 from werkzeug.utils import secure_filename
 
+load_dotenv()
 app = Flask(__name__)
 
 app.secret_key = os.environ.get("SECRET_KEY")
-
 PASSWORD = os.environ.get("PASSWORD")
 
 def get_db_connection():
@@ -17,6 +18,7 @@ def get_db_connection():
 def create_table():
     connection = get_db_connection()
 
+# If table structure is changed, delete miles.bd and restart
     connection.execute("""
         CREATE TABLE IF NOT EXISTS runs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,6 +74,9 @@ def mile_tracker():
         return redirect("/set-user")
     
     user = session["user"]
+    display_user = user
+    if user=="Katie":
+        display_user="My Love"
 
     activity = request.args.get("activity")
 
@@ -80,26 +85,37 @@ def mile_tracker():
     if activity:
         runs = connection.execute("""
             SELECT * FROM runs
-            WHERE user AND activity = ?
+            WHERE user = ? AND activity = ?
         """, (user,activity)).fetchall()
     else:
         runs = connection.execute("""
-            SELECT * FROM runs,
+            SELECT * FROM runs
             WHERE user = ?
-        """).fetchall()
+        """, (user,)).fetchall()
 
     connection.close()
     
-    return render_template("mile-tracker.html", runs=runs)
+    return render_template(
+        "mile-tracker.html",
+        runs=runs,
+        user=display_user
+    )
 
-@app.route("/set-user", methods=["POST"])
+@app.route("/set-user", methods=["GET", "POST"])
 def set_user():
     if not session.get("authenticated"):
         return redirect("/")
     
-    session["user"] = request.form["user"]
-    
-    return redirect("/mile-tracker")
+    if request.method == "POST":
+        print("FORM DATA:", request.form)
+
+        session["user"] = request.form["user"]
+
+        print("SESSION: ", session)
+
+        return redirect("/mile-tracker")
+
+    return render_template("set-user.html")
 
 
 @app.route("/log-details", methods=["POST"])

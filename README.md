@@ -1,90 +1,57 @@
-# Mile-Tracker README
+# Mile Tracker
 
-## CURRENT STATUS
+A Flask-based mileage tracking application that allows users to log and view their running activities. The application supports multiple users, activity filtering, and photo uploads.
 
-Currently deployed and functional.
-Working on improving mile tracking features and styling.
+## Features
 
-.
-07/14/2026
+- User selection for personalized tracking
+- Log running/walking activities
+- Track mileage and dates
+- Filter activities by type
+- View uploaded photos
+- Session-based access control
 
-MAJOR:
-    -Fixed Internal Server Error! *!YAY!*
-        -Bad url end point for url build (miles-tracker -> miles_tracker)
-    -Added filtering functionality to mile tracker to sort through a selected activity
-    -Refactored html for template inheritence
-    -Basic CSS styling
+## Technologies Used
 
-MINOR:
-    -Minor bug fixes
-    -Deleted 'history.html'
-        -combined history with mile-tracker page, it feels cleaner
+- Python
+- Flask
+- SQLite
+- HTML
+- CSS
+- Jinja Templates
 
-TO DO:
-    -Display filered results
-    -Logout feature
-    -Add feature that gives a random uploaded photo from uploaded photos
-    -Add gallery of all uploaded photos
-    -Tidy up html pages
-    -Further CSS styling
+## Project Structure
 
-.
-07/13/2026
+kwooby-site/
+│
+├── app.py
+├── requirements.txt
+├── templates/
+├── static/
+│ ├── css/
+│ └── images/
+└── .env
 
-MAJOR:
-    -Connected with Render to official domain
-    -Added home.html
-    -Added basic navigation between home and mile tracker
+## Database
 
-MINOR:
-    -Code cleanup
-    -Password fixed
-    -Renamed mile-tracker.py to app.py for transparency with framework
-    -Removed requirements.txt from gitignore and manually added gunicorn 26.0.0
+This project uses SQLite for data storage.
 
-TO DO:
+The database contains tables for:
 
-    MAJOR:
-    -Fix Internal Server Error after login
-    
-    MINOR:
-    -Logout feature
-    -Refactor for template inheritence
-    -Add feature that gives a random uploaded photo from uploaded photos
-    -Add gallery of all uploaded photos
-    -Tidy up html pages
-    -CSS
+Users
+Logged activities
+Uploaded photos
 
-.
-07/12/2026
+During development, if database structure changes, the local database may need to be recreated.
 
-INITIAL SETUP:
--Initial commit
--README and gitignore setup
--Basic git setup
--index.html skeleton setup
-    -basic forms
-    -basic boilerplate
--flask skeleton setup
-    -basic connection
-    -sqlite db created
-    -requirements.txt created
+## Future Improvements
 
-MAJOR:
-    -Making this my website
-    -Added password protection (website is WIP, don't want randos once its live)
-    -Moved mile tracking logic into separate html file (cleaner)
-    -Basic boilerplate in history.html
-    -Basic password authetication in index.html
-    -Two forms in mile-tracker.html
-        -'Run Details' form and 'Photo Upload' form
+Full user authentication system
+User account creation
+Improved photo management
+Additional statistics and charts
+Deployment improvements
 
-TO DO:
-    -Logout feature
-    -Fix password
-    -Connect to website
-        -Use Render?
-    -Refactor for template inheritence
-    -Add feature that gives a random uploaded photo from uploaded photos
-        -Probably on the same page as mile tracker input
-        -Eventually, make it so that if there are no pictures ulpoaded yet this feature does not appear
+## Author
+
+Alex Davis

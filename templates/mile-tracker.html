@@ -3,6 +3,8 @@
 {% block title %}Mile Tracker{% endblock %}
 
 {% block content %}
+<h1 name="user-text">Hello {{ user }}!</h1>
+
 <section class = "log-run-info">
     <h2 class="log-details-title">Details of your Run</h2>
     <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
