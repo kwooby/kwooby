@@ -72,7 +72,6 @@ def mile_tracker():
         return redirect("/set-user")
     
     user = session["user"]
-    print(user)
 
     activity = request.args.get("activity")
 
@@ -99,6 +98,7 @@ def set_user():
         return redirect("/")
     
     session["user"] = request.form["user"]
+    
     return redirect("/mile-tracker")
 
 
