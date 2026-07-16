@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form class="set-user" action="/set-user" method="POST">
+<form class="set-user" action="{{ url_for('set_user') }}" method="POST">
     <label for="set=user">Who is here today?</label>
     <br><br>
     <select name="set-user" id="set-user">
