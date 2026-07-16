@@ -5,14 +5,23 @@
 {% block content %}
 <h1 name="user-text">Hello {{ user }}!</h1>
 
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="success-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <section class = "log-run-info">
     <h2 class="log-details-title">Details of your Run</h2>
     <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
+
         <label for="activity">Activity: </label>
         <select name="activity" id="activity">
             <option value="walk">Walk</option>
             <option value="run">Run</option>
-        <select>
+        </select>
         <br>
 
         <label for="miles">Miles: </label>
@@ -28,6 +37,7 @@
 
         <button type="submit">Save Run Details</button>
     </form>
+    <br>
     <br>
 
     <h2 class="log-photos-title">Did you see any kitties today?</h2>
@@ -49,22 +59,34 @@
 <section class="runs-history">
     <h2>History of Runs</h2>
     <p>All the details of all your runs are here</p>
-
+    <br>
+    <section class="history-section">
         {% for run in runs%}
-            <p>{{ run["activity"] }} - {{ run["miles"] }} miles - {{ run["run_date"] }}<p>
-        {% endfor %}
 
+
+            <p>{{ run["activity"].capitalize() }} - Miles: {{ run["miles"] }} - Date: {{ run["run_date"] }}</p>
+
+            <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        {% endfor %}
+    </section>
+
+    <br>
+
+    <section class="filter-section">
         <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
             
-            <label for="activity">Filter by Activity</label>
-            <select name="activity" id="activity">
+            <label for="activity-filter">Filter by Activity</label>
+            <select name="activity" id="activity-filter">
                 <option value="">All</option>
-                <option value="Run">Run</option>
-                <option value="Walk">Walk</option>
+                <option value="run">Run</option>
+                <option value="walk">Walk</option>
             </select>
 
             <button type="submit">Filter</button>
 
         </form>
+    </section>
 </section>
 {% endblock %}

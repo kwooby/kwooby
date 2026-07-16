@@ -6,6 +6,35 @@ Currently deployed and functional.
 Working on improving mile tracking features and styling.
 
 .
+07/16/2026
+
+## Debug Notes
+
+MAJOR:
+    -Added user selection to mile-tracker
+        -Currently there are only two users (myself and Katie), there is no need to have
+        more than those options right now just to simplify debugging right now
+    - Fixed: Flask changes were not appearing and imports were failing
+        -Confusion between Python interpreter environments and Flask's running server,
+        plus a broken/mismatched virtual environment
+        -Identified the correct environment, separated Flask server debugging from Python
+        shell usage, verified that python, pip, and VS Code all point to the same interpreter
+
+MINOR:
+    -Basic logic cleanup
+    -Added delete feature to history of runs
+        -Users can now delete their own individual logged activities in the history
+
+TO DO:
+    -Filter does not actually display filtered runs/walks
+    -Logout feature (select different user)
+    -Add feature that gives a random uploaded photo from uploaded photos
+    -Add gallery of all uploaded photos
+    -Tidy up html pages
+    -Further CSS styling
+        -Fix 'runs-history' table, make display cleaner
+
+.
 07/14/2026
 
 MAJOR:

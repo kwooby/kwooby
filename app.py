@@ -1,11 +1,13 @@
 import sqlite3
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.utils import secure_filename
 
 load_dotenv()
+
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 app.secret_key = os.environ.get("SECRET_KEY")
 PASSWORD = os.environ.get("PASSWORD")
@@ -75,6 +77,7 @@ def mile_tracker():
     
     user = session["user"]
     display_user = user
+
     if user=="Katie":
         display_user="My Love"
 
@@ -94,12 +97,33 @@ def mile_tracker():
         """, (user,)).fetchall()
 
     connection.close()
-    
+    for run in runs:
+        print(dict(run))
+
     return render_template(
         "mile-tracker.html",
         runs=runs,
         user=display_user
     )
+
+@app.route("/delete-run/<int:run_id>", methods=["POST"])
+def delete_run(run_id):
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    connection=get_db_connection()
+
+    connection.execute("""
+        DELETE FROM runs
+        WHERE id = ? AND user = ?
+    """, (run_id, session["user"]))
+
+    connection.commit()
+    connection.close()
+
+    flash("Run deleted.")
+
+    return redirect("/mile-tracker")
 
 @app.route("/set-user", methods=["GET", "POST"])
 def set_user():
@@ -138,7 +162,8 @@ def log_details():
     connection.commit()
     connection.close()
 
-    return "Miles logged"
+    flash("Miles logged successfully!")
+    return redirect('/mile-tracker')
 
 @app.route("/log-photos", methods=["POST"])
 def log_photos():
@@ -179,4 +204,4 @@ def display_photos():
 
 if __name__ == "__main__":
     create_table()
-    app.run()
+    app.run(debug=True)
