@@ -20,9 +20,16 @@ def create_table():
     connection.execute("""
         CREATE TABLE IF NOT EXISTS runs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user TEXT NOT NULL,
             activity TEXT NOT NULL,
             miles REAL NOT NULL,
             run_date TEXT NOT NULL
+        )
+    """)
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user TEXT NOT NULL
         )
     """)
     connection.execute("""
@@ -61,6 +68,12 @@ def mile_tracker():
     if not session.get("authenticated"):
         return redirect("/")
     
+    if "user" not in session:
+        return redirect("/set-user")
+    
+    user = session["user"]
+    print(user)
+
     activity = request.args.get("activity")
 
     connection = get_db_connection()
@@ -68,16 +81,26 @@ def mile_tracker():
     if activity:
         runs = connection.execute("""
             SELECT * FROM runs
-            WHERE activity = ?
-        """, (activity,)).fetchall()
+            WHERE user AND activity = ?
+        """, (user,activity)).fetchall()
     else:
         runs = connection.execute("""
-            SELECT * FROM runs
+            SELECT * FROM runs,
+            WHERE user = ?
         """).fetchall()
 
     connection.close()
     
     return render_template("mile-tracker.html", runs=runs)
+
+@app.route("/set-user", methods=["POST"])
+def set_user():
+    if not session.get("authenticated"):
+        return redirect("/")
+    
+    session["user"] = request.form["user"]
+    return redirect("/mile-tracker")    
+
 
 @app.route("/log-details", methods=["POST"])
 def log_details():
@@ -87,13 +110,14 @@ def log_details():
     activity = request.form["activity"]
     miles = float(request.form["miles"])
     run_date = request.form["run_date"]
+    user = session["user"]
 
     connection = get_db_connection()
 
     connection.execute("""
-        INSERT INTO runs (activity, miles, run_date)
-        VALUES (?, ?, ?)
-    """, (activity, miles, run_date))
+        INSERT INTO runs (user, activity, miles, run_date)
+        VALUES (?, ?, ?, ?)
+    """, (user, activity, miles, run_date))
 
     connection.commit()
     connection.close()

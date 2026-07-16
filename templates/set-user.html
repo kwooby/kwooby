@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}User Selection{% endblock %}
+
+{% block content %}
+
+<form class="set-user" action="/set-user" method="POST">
+    <label for="set=user">Who is here today?</label>
+    <br><br>
+    <select name="set-user" id="set-user">
+        <option value="Katie">Katie</option>
+        <option value="Alex">Alex</option>
+    </select>
+
+    <button type="submit">Select User</button>
+
+</form>
+
+{% endblock %}

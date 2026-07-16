@@ -7,14 +7,10 @@
     <h2 class="log-details-title">Details of your Run</h2>
     <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
         <label for="activity">Activity: </label>
-        <label>
-            <input id="activity" name="activity" type="radio" value="Run" required>
-            Run
-        </label>
-        <label>
-            <input id="activity" name="activity" type="radio" value="Walk" required>
-            Walk
-        </label>
+        <select name="activity" id="activity">
+            <option value="walk">Walk</option>
+            <option value="run">Run</option>
+        <select>
         <br>
 
         <label for="miles">Miles: </label>
