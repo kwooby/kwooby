@@ -99,7 +99,7 @@ def set_user():
         return redirect("/")
     
     session["user"] = request.form["user"]
-    return redirect("/mile-tracker")    
+    return redirect("/mile-tracker")
 
 
 @app.route("/log-details", methods=["POST"])
