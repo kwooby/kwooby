@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}All History{% endblock %}
+
+{% block content %}
+
+<section class="history">
+    <h2>History | Total: {{ total_miles }} Miles</h2>
+    <div class="all-history-container">
+        {% for run in runs%}
+            <div class="info-container">
+                <p>{{ run["activity"].capitalize() }}</p>
+                <p>Miles: {{ run["miles"] }}</p>
+                <p>Date: {{ run["run_date"] }}</p>
+
+                <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+    
+{% endblock %}

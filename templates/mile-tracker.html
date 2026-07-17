@@ -3,7 +3,7 @@
 {% block title %}Mile Tracker{% endblock %}
 
 {% block content %}
-<h1 name="user-text">Hello {{ user }}!</h1>
+<h1 name="user-text">Hello {{ user }}! You have run {{ total_miles }} miles so far!</h1>
 
 {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -13,80 +13,90 @@
     {% endif %}
 {% endwith %}
 
-<section class = "log-run-info">
-    <h2 class="log-details-title">Details of your Run</h2>
-    <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
+<div class="log-container">
+    <section class = "log-details-container">
+        <h2 class="log-details-title">Log your Run</h2>
+        <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
 
-        <label for="activity">Activity: </label>
-        <select name="activity" id="activity">
-            <option value="walk">Walk</option>
-            <option value="run">Run</option>
-        </select>
-        <br>
-
-        <label for="miles">Miles: </label>
-        <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
-
-        <br>
-
-        <label for="run_date">Date: </label>
-        <input id="run_date" name="run_date" type="date" required>
-
-        <br>
-        <br>
-
-        <button type="submit">Save Run Details</button>
-    </form>
-    <br>
-    <br>
-
-    <h2 class="log-photos-title">Did you see any kitties today?</h2>
-    <form class="log-photos" method="POST" action="{{ url_for('log_photos') }}" enctype="multipart/form-data">
-
-        <label for="log_photos">Log Photos: </label>
-        <br>
-        <br>
-        <input id="log_photos" name="log_photos" type="file">
-
-        <br>
-        <br>
-        
-        <button type="submit">Save Photo</button>
-    </form>
-</section>
-<br>
-
-<section class="runs-history">
-    <h2>History of Runs</h2>
-    <p>All the details of all your runs are here</p>
-    <br>
-    <section class="history-section">
-        {% for run in runs%}
-
-
-            <p>{{ run["activity"].capitalize() }} - Miles: {{ run["miles"] }} - Date: {{ run["run_date"] }}</p>
-
-            <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-        {% endfor %}
-    </section>
-
-    <br>
-
-    <section class="filter-section">
-        <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
-            
-            <label for="activity-filter">Filter by Activity</label>
-            <select name="activity" id="activity-filter">
-                <option value="">All</option>
-                <option value="run">Run</option>
+            <label for="activity">Activity: </label>
+            <select name="activity" id="activity">
                 <option value="walk">Walk</option>
+                <option value="run">Run</option>
             </select>
 
-            <button type="submit">Filter</button>
+            <label for="miles">Miles: </label>
+            <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
 
+
+            <label for="run_date">Date: </label>
+            <input id="run_date" name="run_date" type="date" required>
+
+
+            <button type="submit">Save Run Details</button>
         </form>
     </section>
+
+        <section class="small-history-container">
+            <h2>History of Runs</h2>
+            <p>You can see the history of all your runs <a href="/runs-history">HERE</a></p>
+            {% for run in runs%}
+                <div class="info-container">
+                    <p>{{ run["activity"].capitalize() }}</p>
+                    <p>Miles: {{ run["miles"] }}</p>
+                    <p>Date: {{ run["run_date"] }}</p>
+
+                    <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            <div class="page-buttons">
+                {% if run_page > 1 %}
+                    <a href="{{ url_for('mile_tracker', run_page=run_page-1) }}">
+                        <button>Previous</button>
+                    </a>
+                {% endif %}
+
+                {% if has_next_runs %}
+                    <a href="{{ url_for('mile_tracker', run_page=run_page+1) }}">
+                        <button>Next</button>
+                    </a>
+                {% endif %}
+            </div>
+
+            <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
+                
+                <label for="activity-filter">Filter by Activity</label>
+                <select name="activity" id="activity-filter">
+                    <option value="">All</option>
+                    <option value="run">Run</option>
+                    <option value="walk">Walk</option>
+                </select>
+
+                <button type="submit">Filter</button>
+            </form>
+        </section>
+
+    <section class="log-photos-container">
+        <h2 class="log-photos-title">Did you take any pictures?</h2>
+
+        <form class="log-photos" method="POST" action="{{ url_for('log_photos') }}" enctype="multipart/form-data">
+
+            <label for="log_photos">Log Photos: </label>
+            <input id="log_photos" name="log_photos" type="file">
+
+            <button type="submit">Save Photo</button>
+        </form>
+    </section>
+</div>
+
+
+<section class="gallery">
+    <h2 class="gallery-title">Gallery of Photos</h2>
+    {% for photo in photos %}
+        <img src="{{  url_for('static', filename='images/' + photo['photo_filename']) }}">
+    {% endfor %}
 </section>
+
 {% endblock %}

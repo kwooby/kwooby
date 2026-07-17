@@ -3,12 +3,47 @@
 ## CURRENT STATUS
 
 Currently deployed and functional.
-Working on improving mile tracking features and styling.
+Working on improving features and styling.
+
+## Debug Notes
+
+.
+07/17/2026
+
+MAJOR:
+    -Gallery feature officially implemented!!!
+        -Gave grid layout, 9 photos per page
+        -Still need to add pagination buttons to gallery
+    -History of all runs page added
+        -This is separate from the small history of runs on the dashboard
+
+MINOR:
+    -Total miles added
+    -Filter by activity works
+    -Logout feature logic implemented
+        -No HTML or CSS for this yet, only Python logic
+    -Pagination logic added
+        -Previous and Next buttons implemented on small history page
+        -Made it 5 items per page
+        -NO PAGINATION ON ALL HISTORY!!!
+    -Organized CSS
+        -History displays nicely now
+        -Single column for each log
+    -Python logic refactoring
+        -Moved helper functions to flow better
+        -Split get_runs from mile_tracker for a better logic flow
+
+TO DO:
+    -Logout feature (select different user)
+        -Logic is implemented, still need HTML
+    -Add pagination buttons to gallery
+    -Add feature that gives a random uploaded photo from uploaded photos
+        -Could also do a random Toast feature with pictures of Toasty :D
+    -Tidy up html pages
+    -Continued CSS styling
 
 .
 07/16/2026
-
-## Debug Notes
 
 MAJOR:
     -Added user selection to mile-tracker
@@ -33,6 +68,8 @@ TO DO:
     -Tidy up html pages
     -Further CSS styling
         -Fix 'runs-history' table, make display cleaner
+        -I want the delete button to also be on the same row as the activity (more of a UI thing)
+    -Add total miles to history of runs
 
 .
 07/14/2026
