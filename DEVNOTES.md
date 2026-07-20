@@ -7,6 +7,38 @@ Working on improving features and styling.
 
 ## Debug Notes
 
+-Logout feature (switch user)
+-All pictures appear on all users pages, fix it (Done)
+-Add gallery pagination
+
+.
+07/20/2026
+
+MAJOR:
+    -Added a monthly total miles feature
+        -Can be sorted by year
+        -Stores the total of all logged miles for all months miles have been logged
+        -Should only show years where miles were logged
+    -Photos in personal gallery show only for the user that uploaded them
+        -Previously, all photos were showing on all user accounts
+
+MINOR:
+    -Basic mobile layout fix
+        -Items no longer stack on top of each other
+        -Gallery changed to 2fr for mobile instead of 3fr
+    -Minor CSS styling
+    -HTML for gallery pagination started, but not finished
+        -Got distracted by the monthly total feature
+
+TO DO:
+    -Logout feature (select different user)
+        -Logic is implemented, still need HTML and styling
+    -Finish adding pagination buttons to gallery
+    -Add feature that gives a random uploaded photo from uploaded photos
+        -Could also do a random Toast feature with pictures of Toasty :D
+    -Tidy up html pages
+    -Continued CSS styling
+
 .
 07/17/2026
 
@@ -34,13 +66,18 @@ MINOR:
         -Split get_runs from mile_tracker for a better logic flow
 
 TO DO:
+    -Pictures from all users appear on personal gallery!
+        -For the Toast random photo, this is okay, but for individually uploaded photos it must
+        only show photos uploaded by selected user
+        -This is already implemented in the activity tracker, just need to add it to the gallery
     -Logout feature (select different user)
-        -Logic is implemented, still need HTML
+        -Logic is implemented, still need HTML and styling
     -Add pagination buttons to gallery
     -Add feature that gives a random uploaded photo from uploaded photos
         -Could also do a random Toast feature with pictures of Toasty :D
     -Tidy up html pages
     -Continued CSS styling
+    -Mobile looks horrendous omg please fix soon
 
 .
 07/16/2026

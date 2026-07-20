@@ -3,15 +3,19 @@
 {% block title %}Mile Tracker{% endblock %}
 
 {% block content %}
-<h1 name="user-text">Hello {{ user }}! You have run {{ total_miles }} miles so far!</h1>
+<div class="landing">
+    <h1 class="user-text" name="user-text">Hello {{ user }}! You have run {{ total_miles }} miles so far!</h1>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-            <p class="success-message">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+    <div class="flash-message">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="success-message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
 
 <div class="log-container">
     <section class = "log-details-container">
@@ -36,47 +40,81 @@
         </form>
     </section>
 
-        <section class="small-history-container">
-            <h2>History of Runs</h2>
-            <p>You can see the history of all your runs <a href="/runs-history">HERE</a></p>
-            {% for run in runs%}
-                <div class="info-container">
-                    <p>{{ run["activity"].capitalize() }}</p>
-                    <p>Miles: {{ run["miles"] }}</p>
-                    <p>Date: {{ run["run_date"] }}</p>
+    <section class="small-history-container">
+        <h3>History of Runs</h3>
+        <p>You can see the history of ALL your runs <a href="/runs-history">HERE</a></p>
+        
+        <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
+            
+            <label for="activity-filter">Filter by Activity</label>
+            <select name="activity" id="activity-filter">
+                <option value="">All</option>
+                <option value="run">Run</option>
+                <option value="walk">Walk</option>
+            </select>
 
-                    <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            {% endfor %}
-
-            <div class="page-buttons">
-                {% if run_page > 1 %}
-                    <a href="{{ url_for('mile_tracker', run_page=run_page-1) }}">
-                        <button>Previous</button>
-                    </a>
-                {% endif %}
-
-                {% if has_next_runs %}
-                    <a href="{{ url_for('mile_tracker', run_page=run_page+1) }}">
-                        <button>Next</button>
-                    </a>
-                {% endif %}
-            </div>
-
-            <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
+            <button type="submit">Show</button>
+        </form>
+        <br>
+        {% for run in runs%}
+            <div class="info-container">
                 
-                <label for="activity-filter">Filter by Activity</label>
-                <select name="activity" id="activity-filter">
-                    <option value="">All</option>
-                    <option value="run">Run</option>
-                    <option value="walk">Walk</option>
-                </select>
+                <strong><p>{{ run["run_date"] }}</p></strong>
+                <p>{{ run["activity"].capitalize() }}</p>
+                <p>{{ run["miles"] }} Miles</p>
 
-                <button type="submit">Filter</button>
-            </form>
-        </section>
+                <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                    <button class="delete-button" type="submit">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+
+        <div class="page-buttons">
+            {% if run_page > 1 %}
+                <a href="{{ url_for('mile_tracker', run_page=run_page-1) }}">
+                    <button>Previous</button>
+                </a>
+            {% endif %}
+
+            {% if has_next_runs %}
+                <a href="{{ url_for('mile_tracker', run_page=run_page+1) }}">
+                    <button>Next</button>
+                </a>
+            {% endif %}
+        </div>
+    </section>
+
+<section class="monthly-miles-container">
+
+    <h3>Monthly Totals</h3>
+
+    <form class="filter-by-year" method="GET" action="{{ url_for('mile_tracker') }}">
+        <label for="year-filter">Filter by Year</label>
+        <select name="year" id="year-filter">
+            <option value="">-- Select year --</option>
+
+            {% for y in years %}
+                <option value="{{ y }}">{{ y }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Show</button>
+    </form>
+    <br>
+    <div class="monthly-results">
+        {% if monthly_miles %}
+            {% for month_num, month_name, miles in monthly_miles %}
+            <div class="monthly-row">
+                <strong><p>{{ month_name }}</p></strong>
+                <p> | </p>
+                <p>{{ miles }} miles</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Select a year to see monthly totals.</p>
+        {% endif %}
+    </div>
+</section>
 
     <section class="log-photos-container">
         <h2 class="log-photos-title">Did you take any pictures?</h2>
@@ -91,12 +129,25 @@
     </section>
 </div>
 
-
 <section class="gallery">
     <h2 class="gallery-title">Gallery of Photos</h2>
     {% for photo in photos %}
         <img src="{{  url_for('static', filename='images/' + photo['photo_filename']) }}">
     {% endfor %}
+
+    <div class="page-buttons">
+        {% if photo_page > 1 %}
+            <a href="{{ url_for('mile_tracker', photo_page=photo_page-1) }}">
+                <button>Previous</button>
+            </a>
+        {% endif %}
+
+        {% if has_next_photo %}
+            <a href="{{ url_for('mile_tracker', photo_page=photo_page+1) }}">
+                <button>Next</button>
+            </a>
+        {% endif %}
+    </div>
 </section>
 
 {% endblock %}
