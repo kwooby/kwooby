@@ -7,9 +7,38 @@ Working on improving features and styling.
 
 ## Debug Notes
 
--Logout feature (switch user)
--All pictures appear on all users pages, fix it (Done)
--Add gallery pagination
+*****TURN DEBUG OFF BEFORE DEPLOYING*****
+
+.
+07/23/2026
+
+MAJOR:
+    -Changed entire authentication system
+        -Migration complete
+    -Added user and password creation
+        -Users will now need to create an account to log into and use the site
+        -Added register page
+        -Index.html is now the default login page
+    -Added JavaScript page to facilitate added eventListeners
+        -Added eventListener verification for delete entry
+        -Added eventListener to show password when inputting password
+
+MINOR:
+    -stylesheet cleanup
+    -Minor bug fixes
+    -Added script to base.html
+    -DB schema should be solid, no need to add anymore columns or tables for this
+    particular app
+    -Logout feature is officially implemented
+    -All history page now has filters (activity and year)
+
+TO DO:
+    -Omg please style the register page next time you open this, it looks so sad
+    -Finish adding pagination buttons to gallery
+    -Add feature that gives a random uploaded photo from uploaded photos
+        -Could also do a random Toast feature with pictures of Toasty :D
+    -Tidy up html pages
+    -Continued CSS styling
 
 .
 07/20/2026

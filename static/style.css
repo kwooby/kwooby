@@ -9,13 +9,13 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(230, 245, 245);
-    color: #333;
+    color: #06232e;
     line-height: 1.6;
 }
 
 /* Header */
 header {
-    background-color: #222;
+    background-color: #253538;
     color: white;
     padding: 20px;
     text-align: center;
@@ -23,7 +23,7 @@ header {
 
 /* Navigation */
 nav {
-    background-color: #333;
+    background-color: #576e72;
     padding: 10px;
 }
 
@@ -87,7 +87,7 @@ button:hover {
 
 /* Footer */
 footer {
-    background-color: #222;
+    background-color: #253538;
     color: white;
     text-align: center;
     padding: 15px;
@@ -143,6 +143,12 @@ footer {
 
 
 /* Landing CSS */
+.flash-message {
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+}
 .landing {
     background-color: white;
     color: #073333;
@@ -150,11 +156,57 @@ footer {
     padding: 10px;
     margin: 5px;
 }
-.flash-message {
+
+/* Login CSS */
+.login-landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    color: #073333;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.login-landing h1 {
+    margin-bottom: 20px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    width: fit-content;
+}
+
+.login input {
     padding: 5px;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    font-weight: bold;
+    width: 200px;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.password-container input {
+    margin: 0;
+}
+
+.show-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2d5858;
+    background-color: transparent;
+    border: solid 1px #0c3944;
+    padding: 6px 8px;
+    margin: 0;
 }
 
 /* Run History CSS */
@@ -226,6 +278,7 @@ footer {
     object-fit: cover;
     border-radius: 5px;
 }
+
 /* Miles per Month */
 .monthly-miles-container {
     display: grid;

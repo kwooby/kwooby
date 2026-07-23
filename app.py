@@ -5,6 +5,7 @@ import calendar
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 
@@ -12,8 +13,6 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 app.secret_key = os.environ.get("SECRET_KEY")
-PASSWORD = os.environ.get("PASSWORD")
-
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
@@ -24,6 +23,7 @@ def allowed_file (filename):
 def get_db_connection():
     connection = sqlite3.connect("miles.db")
     connection.row_factory = sqlite3.Row
+    connection.execute("PRAGMA foreign_keys = ON")
     return connection
 
 
@@ -32,25 +32,28 @@ def create_table():
 
     # If table structure is changed, delete miles.db and restart
     connection.execute("""
-        CREATE TABLE IF NOT EXISTS runs (
+        CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user TEXT NOT NULL,
-            activity TEXT NOT NULL,
-            miles REAL NOT NULL,
-            run_date TEXT NOT NULL
+            username TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL
         )
     """)
     connection.execute("""
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS runs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user TEXT NOT NULL
+            user_id INTEGER NOT NULL,
+            activity TEXT NOT NULL,
+            miles REAL NOT NULL,
+            run_date TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     """)
     connection.execute("""
         CREATE TABLE IF NOT EXISTS photos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user TEXT NOT NULL,
-            photo_filename TEXT NOT NULL
+            user_id INTEGER NOT NULL,
+            photo_filename TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     """)
 
@@ -62,15 +65,43 @@ def create_table():
 def index():
     return render_template('index.html')
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        password_hash = generate_password_hash(password)
+
+        try:
+            with get_db_connection() as connection:
+                connection.execute("""
+                    INSERT INTO users (username, password_hash)
+                    VALUES (?, ?)
+                """,(username, password_hash))
+
+            flash("Account created! Please log in.")
+            return redirect("/")
+        except sqlite3.IntegrityError:
+            flash("Username already exists")
+            return redirect("/regster")
+
+    return render_template("register.html")
+
 @app.route("/login", methods=["POST"])
 def login():
+
+    username = request.form["username"]
     password = request.form["password"]
 
-    if password == PASSWORD:
+    user = get_user(username)
+
+    if user and check_password_hash(user["password_hash"], password):
         session["authenticated"] = True
+        session["user_id"] = user["id"]
         return redirect("/home")
-    
-    return render_template("index.html", error="Wrong Password")
+    else:
+        return render_template("index.html", error="Invalid username or password")
 
 @app.route("/logout")
 def logout():
@@ -79,49 +110,32 @@ def logout():
 
 @app.route("/home")
 def home():
-    if not session.get("authenticated"):
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
     
     return render_template("home.html")
 
 @app.route("/delete-run/<int:run_id>", methods=["POST"])
 def delete_run(run_id):
-    if not session.get("authenticated"):
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
-    
-    if "user" not in session:
-        return redirect("/set-user")
     
     with get_db_connection() as connection:
         connection.execute("""
             DELETE FROM runs
-            WHERE id = ? AND user = ?
-        """, (run_id, session["user"]))
+            WHERE id = ? AND user_id = ?
+        """, (run_id, session["user_id"]))
 
     flash("Run deleted.")
 
     return redirect("/mile-tracker")
 
-@app.route("/set-user", methods=["GET", "POST"])
-def set_user():
-    if not session.get("authenticated"):
-        return redirect("/")
-    
-    if request.method == "POST":
-        print("FORM DATA:", request.form)
-
-        session["user"] = request.form["user"]
-
-        print("SESSION: ", session)
-
-        return redirect("/mile-tracker")
-
-    return render_template("set-user.html")
-
 @app.route("/log-details", methods=["POST"])
 def log_details():
-    if not session.get("authenticated"):
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
+
+    user_id = session["user_id"]
     
     activity = request.form["activity"]
 
@@ -132,22 +146,21 @@ def log_details():
         return redirect("/mile-tracker")
     
     run_date = request.form["run_date"]
-    user = session["user"]
 
     with get_db_connection() as connection:
         connection.execute("""
-            INSERT INTO runs (user, activity, miles, run_date)
+            INSERT INTO runs (user_id, activity, miles, run_date)
             VALUES (?, ?, ?, ?)
-        """, (user, activity, miles, run_date))
+        """, (user_id, activity, miles, run_date))
 
     flash("Miles logged successfully!")
     return redirect('/mile-tracker')
 
 @app.route("/log-photos", methods=["POST"])
 def log_photos():
-    if not session.get("authenticated"):
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
-    
+        
     photo = request.files["log_photos"]
 
     if photo.filename == "":
@@ -160,127 +173,101 @@ def log_photos():
 
     filename = secure_filename(photo.filename)
     unique_filename = str(uuid.uuid4()) + "_" + filename
-    user = session["user"]
 
+    user_id = session["user_id"]
+    
     photo.save(f"static/images/{unique_filename}")
 
     with get_db_connection() as connection:
         connection.execute("""
-            INSERT INTO photos (user, photo_filename)
+            INSERT INTO photos (user_id, photo_filename)
             VALUES (?, ?)
-        """, (user, unique_filename,))
+        """, (user_id, unique_filename,))
 
     flash('Photo logged successfully!')
 
     return redirect('/mile-tracker')
 
-def get_runs(user, activity=None, page=1, history=False, year=None):
+def get_runs(user_id, activity=None, page=1, history=False, year=None):
     
     runs_per_page = 5
     offset = (page - 1) * runs_per_page
 
+    where_clauses = ["user_id = ?"]
+    params = [user_id]
+
+    if activity:
+        where_clauses.append("activity = ?")
+        params.append(activity)
+
+    if year:
+        where_clauses.append("strftime('%Y', run_date) = ?")
+        params.append(str(year))
+
+    where_sql = " AND ".join(where_clauses)
+
+    sql = f"""
+        SELECT* FROM runs
+        WHERE {where_sql}
+        ORDER BY run_date DESC
+    """
+
+    if not history:
+        sql += " LIMIT ? OFFSET ?"
+        params.extend([runs_per_page, offset])
+
     with get_db_connection() as connection:
-        
-        if history and activity:
-            runs = connection.execute("""
-                SELECT * FROM runs
-                WHERE user = ? AND activity = ?
-                ORDER BY run_date DESC
-            """, (user, activity)).fetchall()
-
-        elif history:
-            runs = connection.execute("""
-                SELECT * FROM runs
-                WHERE user = ?
-                ORDER BY run_date DESC
-            """, (user,)).fetchall()
-
-        elif activity:
-            if year:
-                runs = connection.execute("""
-                    SELECT * FROM runs
-                    WHERE user = ?
-                    AND activity = ?
-                    AND strftime('%Y', run_date) = ?
-                    ORDER BY run_date DESC
-                    LIMIT ? OFFSET ?
-                """, (user, activity, year, runs_per_page, offset)).fetchall()
-            else:
-                runs = connection.execute("""
-                    SELECT * FROM runs
-                    WHERE user = ? AND activity = ?
-                    ORDER BY run_date DESC
-                    LIMIT ? OFFSET ?
-                """, (user, activity, runs_per_page, offset)).fetchall()
-        else:
-            if year:
-                runs = connection.execute("""
-                    SELECT * FROM runs
-                    WHERE user = ?
-                    AND strftime('%Y', run_date) = ?
-                    ORDER BY run_date DESC
-                    LIMIT ? OFFSET ?
-                """, (user, year, runs_per_page, offset)).fetchall()
-            else:
-                runs = connection.execute("""
-                    SELECT * FROM runs
-                    WHERE user = ?
-                    ORDER BY run_date DESC
-                    LIMIT ? OFFSET ?
-                """, (user, runs_per_page, offset)).fetchall()
+        runs = connection.execute(sql, tuple(params)).fetchall()
 
     if history:
         return runs
 
     return runs, len(runs) == runs_per_page
 
-def get_photos(page=1):
+def get_photos(user_id, page=1):
     
     photos_per_page = 9
     offset = (page - 1) * photos_per_page
 
     with get_db_connection() as connection:
         
-        user = session["user"]
-
         photos = connection.execute("""
             SELECT * FROM photos
-            WHERE user = ?
+            WHERE user_id = ?
             ORDER BY id DESC
             LIMIT ? OFFSET ?
-        """, (user, photos_per_page, offset)).fetchall()
+        """, (user_id, photos_per_page, offset)).fetchall()
 
     return photos
 
-def get_total_miles(user):
+def get_total_miles(user_id):
     
     with get_db_connection() as connection:
         total_miles = connection.execute("""
             SELECT SUM(miles) 
             FROM runs
-            WHERE user = ?
-        """, (user,)).fetchone()[0]
+            WHERE user_id = ?
+        """, (user_id,)).fetchone()[0]
 
-        return total_miles or 0
+        return round(total_miles or 0, 1)
     
-def get_available_years(user):
+def get_available_years(user_id):
     """Return a list of years (as strings) in which the user has runs, ordered desc."""
     with get_db_connection() as connection:
         years = connection.execute("""
             SELECT DISTINCT STRFTIME('%Y', run_date) as year
             FROM runs
-            WHERE user = ?
+            WHERE user_id = ?
             ORDER BY year DESC
-        """, (user,)).fetchall()
+        """, (user_id,)).fetchall()
 
     # fetchall returns list of sqlite3.Row; extract year strings
     return [row[0] for row in years if row[0] is not None]
 
+def get_monthly_miles(user_id, year=None, activity=None):
+    query_params = [user_id]
 
-def get_monthly_miles(user, year=None, activity=None):
-    query_params = [user]
-
-    where_clauses = ["user = ?"]
+    where_clauses = ["user_id = ?"]
 
     if year:
         where_clauses.append("STRFTIME('%Y', run_date) = ?")
@@ -295,7 +282,7 @@ def get_monthly_miles(user, year=None, activity=None):
     # Group by month number and order by month number so months are in calendar order
     sql = f"""
         SELECT STRFTIME('%m', run_date) as month_num,
-               SUM(miles) as total_miles
+                SUM(miles) as total_miles
         FROM runs
         WHERE {where_sql}
         GROUP BY month_num
@@ -309,47 +296,71 @@ def get_monthly_miles(user, year=None, activity=None):
     for row in rows:
         month_num = int(row[0])
         month_name = calendar.month_name[month_num]
-        total_miles = row[1] or 0
+        total_miles = round(row[1] or 0, 1)
         result.append((month_num, month_name, total_miles))
 
     return result
 
+def get_username(user_id):
+    with get_db_connection() as connection:
+        user = connection.execute(
+            "SELECT username FROM users WHERE id = ?",
+            (user_id,)
+        ).fetchone()
+
+    return user["username"] if user else None
+
+def get_user(username):
+    with get_db_connection() as connection:
+        user = connection.execute("""
+            SELECT * FROM users
+            WHERE username = ?
+        """, (username,)).fetchone()
+
+    return user
 
 @app.route("/runs-history")
-def get_all_history():
-    if not session.get("authenticated"):
+def runs_history():
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
-    
-    if "user" not in session:
-        return redirect("/set-user")
-    
-    user = session["user"]
-    display_user = user
 
-    total_miles = get_total_miles(user)
+    user_id = session["user_id"]
 
-    runs = get_runs(user, history=True)
+    display_user = get_username(user_id)
+
+    activity = request.args.get("activity")
+    selected_year = request.args.get("year") or None
+
+    if selected_year == "":
+        selected_year = None
+
+    years = get_available_years(user_id)
+    total_miles = get_total_miles(user_id)
+
+    runs = get_runs(
+        user_id,
+        activity,
+        history=True,
+        year=selected_year
+        )
 
     return render_template(
         "runs-history.html",
         runs=runs,
         user=display_user,
-        total_miles=total_miles
+        total_miles=total_miles,
+        selected_year=selected_year,
+        years=years,
         )
 
 @app.route("/mile-tracker")
 def mile_tracker():
-    if not session.get("authenticated"):
+    if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
-    
-    if "user" not in session:
-        return redirect("/set-user")
-        
-    user = session["user"]
-    display_user = user
 
-    if user == "Katie":
-        display_user="My Love"
+    user_id = session["user_id"]
+
+    display_user = get_username(user_id)
 
     # Activity filter (keeps existing behavior for runs listing)
     activity = request.args.get("activity")
@@ -360,24 +371,25 @@ def mile_tracker():
 
     # Year filter (for monthly aggregation). Empty string -> None
     selected_year = request.args.get("year")
+
     if selected_year == "":
         selected_year = None
 
-    photos = get_photos(photo_page)
+    photos = get_photos(user_id, photo_page)
     runs, has_next_runs = get_runs(
-        user,
+        user_id,
         activity,
         run_page,
         year=selected_year
     )
 
-    total_miles = get_total_miles(user)
+    total_miles = get_total_miles(user_id)
 
     # Get list of years that have runs for this user so UI can present options
-    years = get_available_years(user)
+    years = get_available_years(user_id)
 
     # Compute monthly aggregation restricted to the selected year (if provided)
-    monthly_miles = get_monthly_miles(user, year=selected_year)
+    monthly_miles = get_monthly_miles(user_id, year=selected_year)
 
     return render_template(
         "mile-tracker.html",

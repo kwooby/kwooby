@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} | Kwooby</title>
@@ -13,6 +14,7 @@
         <ul class="nav-bar">
             <li><a href ="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('mile_tracker') }}">Mile Tracker For my Wife</a></li>
+            <li><a href="{{  url_for('logout') }}">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -25,6 +27,9 @@
 <footer>
     <p>Kwoobster</p>
 </footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 
 </html>

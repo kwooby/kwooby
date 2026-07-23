@@ -3,20 +3,34 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h1>Login to View Kwooby</h1>
+<div class="login-landing">
+    <h1 class="welcome-title">Welcome to Kwooby</h1>
 
-    <main>
-        <form method="POST" action="/login">
-    
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password" required>
+        <form class="login" action="/login" method="POST">
 
-            <button type="submit">Enter</button>
-        </form>
-    </main>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+
+        <div class="password-container">
+            <input type="password" id="password" name="password" required>
+            <button class= "show-password" type="button" id="show-password">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
+
+        <button type="submit">Login</button>
+
+    </form>
+    <br>
+
+    <p>No account?</p>
+    <a href="/register">Create one to see inside!</a>
 
     {% if error %}
         <p>{{ error }}</p>
     {% endif %}
+</div>
 
 {% endblock %}

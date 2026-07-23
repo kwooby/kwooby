@@ -5,7 +5,7 @@
 {% block content %}
 <div class="landing">
     <h1 class="user-text" name="user-text">Hello {{ user }}! You have run {{ total_miles }} miles so far!</h1>
-
+    
     <div class="flash-message">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -63,7 +63,7 @@
                 <p>{{ run["activity"].capitalize() }}</p>
                 <p>{{ run["miles"] }} Miles</p>
 
-                <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                <form class="delete-log" action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
                     <button class="delete-button" type="submit">Delete</button>
                 </form>
             </div>
