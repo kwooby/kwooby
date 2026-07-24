@@ -8,6 +8,11 @@ Working on improving features and styling.
 ## Debug Notes
 
 *****TURN DEBUG OFF BEFORE DEPLOYING*****
+.
+07/24/2026
+
+MAJOR:
+    -
 
 .
 07/23/2026

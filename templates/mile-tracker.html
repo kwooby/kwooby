@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="landing">
-    <h1 class="user-text" name="user-text">Hello {{ user }}! You have run {{ total_miles }} miles so far!</h1>
+    <h1 class="user-text" name="user-text">Hello {{ user }}! You have logged {{ total_miles }} miles so far!</h1>
     
     <div class="flash-message">
         {% with messages = get_flashed_messages() %}
@@ -19,7 +19,7 @@
 
 <div class="log-container">
     <section class = "log-details-container">
-        <h2 class="log-details-title">Log your Run</h2>
+        <h2 class="log-details-title">Log Activity</h2>
         <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
 
             <label for="activity">Activity: </label>
@@ -36,12 +36,12 @@
             <input id="run_date" name="run_date" type="date" required>
 
 
-            <button type="submit">Save Run Details</button>
+            <button type="submit">Log Activity</button>
         </form>
     </section>
 
     <section class="small-history-container">
-        <h3>History of Runs</h3>
+        <h3>Activity History</h3>
         <p>You can see the history of ALL your runs <a href="/runs-history">HERE</a></p>
         
         <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">

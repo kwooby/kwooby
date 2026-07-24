@@ -21,6 +21,8 @@ def allowed_file (filename):
 
 
 def get_db_connection():
+    print("DATABASE:", os.path.abspath("miles.db"))
+    
     connection = sqlite3.connect("miles.db")
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
@@ -84,7 +86,7 @@ def register():
             return redirect("/")
         except sqlite3.IntegrityError:
             flash("Username already exists")
-            return redirect("/regster")
+            return redirect("/register")
 
     return render_template("register.html")
 
@@ -407,4 +409,4 @@ def mile_tracker():
 
 if __name__ == "__main__":
     create_table()
-    app.run()
+    app.run(debug=True)

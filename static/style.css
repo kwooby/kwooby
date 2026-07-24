@@ -324,13 +324,13 @@ footer {
     }
 
     .info-container {
-        width: 100%;
+        width: 90%;
     }
 
     input,
     select,
     button {
-        width: 100%;
+        width: fit-content;
     }
 
     .gallery {
@@ -338,7 +338,7 @@ footer {
     }
 
     nav ul {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
 }
