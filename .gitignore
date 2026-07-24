@@ -1,4 +1,4 @@
 .venv/
 .env
-miles.db
-miles-clean.db
+old-miles.db
+old-miles-clean.db

@@ -291,6 +291,21 @@ def get_photos(user_id, page=1):
         
     return photos, has_next_photo
 
+@app.route("/clear-photos")
+def clear_photos():
+    if not session.get("authenticated"):
+        return redirect("/")
+
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "DELETE FROM photos WHERE user_id = %s",
+                (session["user_id"],)
+            )
+        connection.commit()
+
+    return "Photos deleted."
+
 def get_total_miles(user_id):
     
     with get_db_connection() as connection:
