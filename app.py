@@ -360,6 +360,7 @@ def runs_history():
 
 @app.route("/mile-tracker")
 def mile_tracker():
+    
     if not session.get("authenticated") or "user_id" not in session:
         return redirect("/")
 
@@ -409,6 +410,15 @@ def mile_tracker():
         selected_year=selected_year,
         years=years
     )
+
+@app.route("/debug-users")
+def debug_users():
+    with get_db_connection() as connection:
+        users = connection.execute(
+            "SELECT username FROM users"
+        ).fetchall()
+
+    return str([user["username"] for user in users])
 
 if __name__ == "__main__":
     create_table()
