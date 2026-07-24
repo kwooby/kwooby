@@ -12,14 +12,24 @@ Working on improving features and styling.
 07/24/2026
 
 MAJOR:
-    -
+    -Migrated from SQLite to POSTGRESql (good lord)
+        -Created users were not saving because of a disconnect between render and
+        SQLite3
+        -DB is now on POSTGRES through render
+            -Basic plan + 5gb storage to mess around (lower storage if needed in
+            the future)
+    -Cloudinary is now in use for photo cloud storage
+        -Store in  local machine before, resulted in inability to see any photos
+        -Would appear as broken links
+        -Dependency added and debugged
+        -Cloudinary account is linked through github
+        -Enviroment variables added
 
 .
 07/23/2026
 
 MAJOR:
     -Changed entire authentication system
-        -Migration complete
     -Added user and password creation
         -Users will now need to create an account to log into and use the site
         -Added register page

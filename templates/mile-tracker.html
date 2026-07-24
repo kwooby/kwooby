@@ -132,7 +132,7 @@
 <section class="gallery">
     <h2 class="gallery-title">Gallery of Photos</h2>
     {% for photo in photos %}
-        <img src="{{  url_for('static', filename='images/' + photo['photo_filename']) }}">
+        <img src="{{ photo['photo_filename'] }}">
     {% endfor %}
 
     <div class="page-buttons">

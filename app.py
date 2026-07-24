@@ -7,8 +7,17 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, session, redirect, flash
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+import cloudinary
+import cloudinary.uploader
 
 load_dotenv()
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -199,14 +208,20 @@ def log_photos():
 
     user_id = session["user_id"]
     
-    photo.save(f"static/images/{unique_filename}")
+    result = cloudinary.uploader.upload(
+        photo,
+        public_id=unique_filename,
+        folder="mile-tracker"
+    )
+
+    photo_url = result["secure_url"]
 
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute("""
                 INSERT INTO photos (user_id, photo_filename)
                 VALUES (%s, %s)
-            """, (user_id, unique_filename))
+            """, (user_id, photo_url))
 
         connection.commit()
 
@@ -269,7 +284,12 @@ def get_photos(user_id, page=1):
 
             photos = cursor.fetchall()
 
-    return photos
+    has_next_photo = len(photos) > photos_per_page
+
+    if has_next_photo:
+        photos = photos[:photos_per_page]
+        
+    return photos, has_next_photo
 
 def get_total_miles(user_id):
     
@@ -421,7 +441,11 @@ def mile_tracker():
     if selected_year == "":
         selected_year = None
 
-    photos = get_photos(user_id, photo_page)
+    photos, has_next_photo = get_photos(
+        user_id,
+        photo_page,
+        )
+    
     runs, has_next_runs = get_runs(
         user_id,
         activity,
@@ -445,6 +469,7 @@ def mile_tracker():
         photo_page=photo_page,
         run_page=run_page,
         has_next_runs=has_next_runs,
+        has_next_photo=has_next_photo,
         total_miles=total_miles,
         monthly_miles=monthly_miles,
         selected_year=selected_year,
@@ -463,4 +488,4 @@ def debug_users():
 create_table()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
