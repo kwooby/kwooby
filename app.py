@@ -460,6 +460,7 @@ def debug_users():
 
     return str([user["username"] for user in users])
 
+create_table()
+
 if __name__ == "__main__":
-    create_table()
     app.run(debug=True)
