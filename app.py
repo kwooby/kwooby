@@ -98,6 +98,9 @@ def login():
 
     user = get_user(username)
 
+    print("LOGIN ATTEMPT: ", username)
+    print("FOUND USER: ", user)
+
     if user and check_password_hash(user["password_hash"], password):
         session["authenticated"] = True
         session["user_id"] = user["id"]
