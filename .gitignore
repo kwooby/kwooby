@@ -1,4 +1,4 @@
 .venv/
 .env
 miles.db
-updatedb.py
+miles-clean.db

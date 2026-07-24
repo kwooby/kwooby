@@ -35,6 +35,7 @@ MINOR:
 TO DO:
     -Omg please style the register page next time you open this, it looks so sad
     -Finish adding pagination buttons to gallery
+    -On miles-tracker dashboard, capitalize first letter of username
     -Add feature that gives a random uploaded photo from uploaded photos
         -Could also do a random Toast feature with pictures of Toasty :D
     -Tidy up html pages
