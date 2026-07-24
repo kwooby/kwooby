@@ -80,16 +80,23 @@ def register():
                 connection.execute("""
                     INSERT INTO users (username, password_hash)
                     VALUES (?, ?)
-                """,(username, password_hash))
+                """, (username, password_hash))
+
+                check = connection.execute(
+                    "SELECT username FROM users WHERE username = ?",
+                    (username,)
+                ).fetchone()
+
+                print("JUST CREATED:", check)
 
             flash("Account created! Please log in.")
             return redirect("/")
+
         except sqlite3.IntegrityError:
             flash("Username already exists")
             return redirect("/register")
 
     return render_template("register.html")
-
 @app.route("/login", methods=["POST"])
 def login():
 
