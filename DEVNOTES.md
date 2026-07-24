@@ -12,11 +12,11 @@ Working on improving features and styling.
 07/24/2026
 
 MAJOR:
-    -Migrated from SQLite to POSTGRESql (good lord)
-        -Created users were not saving because of a disconnect between render and
-        SQLite3
+    -Migrated from SQLite to POSTGRES (good lord)
+        -Created users were not saving in SQLite DB so users not created locally
+        were lost
         -DB is now on POSTGRES through render
-            -Basic plan + 5gb storage to mess around (lower storage if needed in
+        -Basic plan + 5gb storage to mess around (lower storage if needed in
             the future)
     -Cloudinary is now in use for photo cloud storage
         -Store in  local machine before, resulted in inability to see any photos
@@ -24,6 +24,23 @@ MAJOR:
         -Dependency added and debugged
         -Cloudinary account is linked through github
         -Enviroment variables added
+        -Should stay persistent across redeploys
+
+MINOR:
+    -Moved original miles.db and clean-miles.db into backups folder
+        -Keeping for emergencies, in case we need the original DB
+        -Both are included in .gitignore
+
+TO DO:
+    -Style the register page, still looks sad
+    -Finish adding pagination buttons to gallery
+        -Started this, but database migration and cloudinary addition took
+        up a lot of time
+    -On miles-tracker dashboard, capitalize first letter of username
+    -Add feature that gives a random uploaded photo from uploaded photos (this
+    is very last thing to be doing after everything else works well)
+    -Tidy up html pages
+    -Continued CSS styling
 
 .
 07/23/2026
