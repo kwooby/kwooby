@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+
+    <div class="flash-message-register">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+<section class="register-section">
+    <h1>Create Account</h1>
+
+    <form class="register-form" method="POST">
+        
+        <label>Username: </label>
+        <div class="form-field">
+            <input name="username" type="text" maxlength="20" required>
+        </div>
+
+        <label>Password: </label>
+        <div class="form-field">        
+            <input type="password" id="password" name="password" maxlength="40" required>
+            <button class= "show-password" type="button" id="show-password">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
+
+        <label>Confirm Password: </label>
+        <div class="form-field">
+            <input type="password" id="confirm-password" name="confirm-password" maxlength="40" required>
+            <button class= "show-password" type="button" id="show-password">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
+
+        <button class="register-button" type="submit">Register</button>
+
+    </form>
+</section>
+{% endblock %}

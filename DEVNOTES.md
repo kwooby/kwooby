@@ -1,4 +1,4 @@
-# Mile-Tracker DEVNOTES
+# Mile-Tracker and Website Development - DEVNOTES
 
 ## CURRENT STATUS
 
@@ -8,6 +8,51 @@ Working on improving features and styling.
 ## Debug Notes
 
 *****TURN DEBUG OFF BEFORE DEPLOYING*****
+
+.
+07/26/2029
+
+MAJOR:
+    -Added 'settings.html'
+        -Route and basic authentication added
+        -Basic HTML setup
+
+MINOR:
+    -Gallery pagination buttons implemented
+    -Dashboard CSS feels better now
+        -Centered, flow is better
+    -Changed wording for several labels
+    -Display user on dashboard now appears with capitalization
+
+    -Users not saving bug seems to be fixed now
+        -Leaving debug-users page for now to continue to monitor the issue but
+        so far so good
+
+    -Register page has been styled in the most basic sense
+    -Renamed "/register" to "/register-user" for clarity
+    -Changed gallery to hold six photos per page instead of nine
+
+TO DO:
+    HIGH PRIORITY:
+        -Change date format: DD/MM/YY instead of (YYYY-DD-MM)
+        -Finish setting up the settings page
+            -still need to create 'delete_account' function
+        -Create a demo page with items filled out already so that employers can look
+        around without having to create an account
+            -Make it read-only
+            -If anyone wants to actively use the tracker or any other apps, they must make an account
+
+    MINOR:
+        -Add delete feature for photos
+            -Need to figure out where to implement this so it's not annoying
+        -Add feature that gives a random uploaded photo from uploaded photos (this
+        is very last thing to be doing after everything else works well)
+        -Tidy up html pages
+        -Continued CSS styling
+
+NOTES:
+    -Keeping 'debug-users' until I can confirm the users and DB are functional
+
 .
 07/24/2026
 
@@ -19,7 +64,7 @@ MAJOR:
         -Basic plan + 5gb storage to mess around (lower storage if needed in
             the future)
     -Cloudinary is now in use for photo cloud storage
-        -Store in  local machine before, resulted in inability to see any photos
+        -Stored in local machine before, resulted in inability to see any photos
         -Would appear as broken links
         -Dependency added and debugged
         -Cloudinary account is linked through github

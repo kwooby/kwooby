@@ -4,7 +4,7 @@ import os
 import uuid
 import calendar
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Flask, render_template, request, session, redirect, flash, url_for
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import cloudinary
@@ -74,11 +74,26 @@ def create_table():
 def index():
     return render_template('index.html')
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
+@app.route("/register_user", methods=["GET", "POST"])
+def register_user():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        confirm_password = request.form["confirm-password"]
+
+        # Validation
+
+        if len(username) < 3:
+            flash("Username must be at least 3 characters.")
+            return redirect(url_for("register_user"))
+
+        if len(password) < 5:
+            flash("Password must be at least 5 characters.")
+            return redirect(url_for("register_user"))
+
+        if password != confirm_password:
+            flash("Passwords do not match!")
+            return redirect(url_for("register_user"))
 
         password_hash = generate_password_hash(password)
 
@@ -100,16 +115,13 @@ def register():
 
                 connection.commit()
 
-            print("JUST CREATED:", check)
-
-            flash("Account created! Please log in.")
-            return redirect("/")
+            return redirect(url_for("index"))
 
         except psycopg2.IntegrityError:
             flash("Username already exists")
-            return redirect("/register")
+            return redirect(url_for("register_user"))
 
-    return render_template("register.html")
+    return render_template("register-user.html")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -125,26 +137,26 @@ def login():
     if user and check_password_hash(user["password_hash"], password):
         session["authenticated"] = True
         session["user_id"] = user["id"]
-        return redirect("/home")
+        return redirect(url_for("home"))
     else:
         return render_template("index.html", error="Invalid username or password")
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/")
+    return redirect(url_for("index"))
 
 @app.route("/home")
 def home():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
     
     return render_template("home.html")
 
 @app.route("/delete-run/<int:run_id>", methods=["POST"])
 def delete_run(run_id):
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
     
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
@@ -162,7 +174,7 @@ def delete_run(run_id):
 @app.route("/log-details", methods=["POST"])
 def log_details():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
 
     user_id = session["user_id"]
     
@@ -191,7 +203,7 @@ def log_details():
 @app.route("/log-photos", methods=["POST"])
 def log_photos():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
         
     photo = request.files["log_photos"]
 
@@ -255,7 +267,7 @@ def get_runs(user_id, activity=None, page=1, history=False, year=None):
 
     if not history:
         sql += " LIMIT %s OFFSET %s"
-        params.extend([runs_per_page, offset])
+        params.extend([runs_per_page + 1, offset])
 
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
@@ -269,7 +281,7 @@ def get_runs(user_id, activity=None, page=1, history=False, year=None):
 
 def get_photos(user_id, page=1):
     
-    photos_per_page = 9
+    photos_per_page = 6
     offset = (page - 1) * photos_per_page
         
     with get_db_connection() as connection:
@@ -280,7 +292,7 @@ def get_photos(user_id, page=1):
                 WHERE user_id = %s
                 ORDER BY id DESC
                 LIMIT %s OFFSET %s
-            """, (user_id, photos_per_page, offset))
+            """, (user_id, photos_per_page + 1, offset))
 
             photos = cursor.fetchall()
 
@@ -387,7 +399,7 @@ def get_user(username):
 @app.route("/runs-history")
 def runs_history():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
 
     user_id = session["user_id"]
 
@@ -422,7 +434,7 @@ def runs_history():
 def mile_tracker():
     
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect("/")
+        return redirect(url_for("index"))
 
     user_id = session["user_id"]
 
@@ -450,7 +462,6 @@ def mile_tracker():
         user_id,
         activity,
         run_page,
-        year=selected_year
     )
 
     total_miles = get_total_miles(user_id)
@@ -474,6 +485,20 @@ def mile_tracker():
         monthly_miles=monthly_miles,
         selected_year=selected_year,
         years=years
+    )
+
+@app.route("/settings")
+def settings():
+    if not session.get("authenticated") or "user_id" not in session:
+        return redirect(url_for("index"))
+
+    user_id= session["user_id"]
+
+    display_user=get_username(user_id)
+
+    return render_template(
+        "settings.html",
+        user=display_user,
     )
 
 @app.route("/debug-users")

@@ -58,6 +58,19 @@ section {
     margin-bottom: 20px;
     border-radius: 8px;
 }
+/* Flash CSS */
+.flash-message {
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.flash-message-register {
+    font-weight: bold;
+    padding: 5px;
+    justify-items: center;
+}
 
 /* Buttons */
 button {
@@ -78,6 +91,18 @@ button {
     margin: 10px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.page-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.register-button {
+    width: fit-content;
+    margin: 20px;
+    align-self: center;
 }
 
 button:hover {
@@ -107,9 +132,10 @@ footer {
     color: #073333;
 }
 
-.log-container > :first-child {
+.log-container > :first-child, .log-container > :last-child {
     grid-column: 1 / -1;
-    justify-content: center;
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -117,38 +143,36 @@ footer {
 .log-details-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.log-details {
+    display: flex;
+    width: 50%;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
-    width: 90%;
-    margin: 8px;
-    padding: 15px;
+    align-items: center;
 }
 
 .log-photos-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-content: space-around;
     padding: 15px;
     margin: 10px;
-    width: 90%;
     text-align: center;
 }
 
-/* Photos section */
-.log-photos-section {
+.log-photos {
     display: flex;
-    flex-direction: column;
-    width: 50%;
+    flex-direction: row;
+    width: 40%;
+    flex-wrap: wrap;
 }
-
 
 /* Landing CSS */
-.flash-message {
-    padding: 5px;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    font-weight: bold;
-}
 .landing {
     background-color: white;
     color: #073333;
@@ -179,23 +203,12 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 10px;
     width: fit-content;
 }
 
-.login input {
-    padding: 5px;
-    width: 200px;
-}
-
-.password-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.password-container input {
-    margin: 0;
+.register-form input {
+    width: max-content;
+    box-sizing: border-box;
 }
 
 .show-password {
@@ -207,6 +220,23 @@ footer {
     border: solid 1px #0c3944;
     padding: 6px 8px;
     margin: 0;
+}
+
+/* Settings */
+
+.settings-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.delete-account-button {
+    background-color: rgb(255, 67, 67);
+}
+
+.delete-account-button:hover {
+    background-color: rgb(255, 153, 153);
+    color: rgb(51, 22, 22);
 }
 
 /* Run History CSS */
@@ -253,8 +283,8 @@ footer {
 
 .log-photos-container :last-child {
     grid-column: 1 / -1;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-content: space-around;
 }
 
 /* Image gallery */
@@ -265,9 +295,10 @@ footer {
     padding: 20px
 }
 
-.gallery > :first-child {
+.gallery > :first-child, .gallery > :last-child {
     grid-column: 1 / -1;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-content: space-evenly;
     align-items: center;
     text-align: center;
 }
@@ -291,6 +322,7 @@ footer {
     margin: 10px;
     padding: 15px;
 }
+
 .monthly-results {
     display: flex;
     flex-direction: column;
@@ -312,8 +344,47 @@ footer {
     padding: 10px;
 }
 
-/* Mobile Layout Overrides */
+/* Register Page */
+.register-section {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    gap: 15px;
+    padding: 15px;
+}
 
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 300px;
+    margin: 5px;
+    gap: 3px;
+}
+
+.register-form input {
+    width: max-content;
+    box-sizing: border-box;
+}
+
+.register-form > :last-child {
+    margin-bottom: 13px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-field label {
+    text-align: left;
+    width: fit-content;
+}
+
+/* Mobile Layout Overrides */
 @media (max-width: 768px) {
     .log-container {
         grid-template-columns: 1fr;

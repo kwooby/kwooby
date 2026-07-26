@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+
+<section class="landing">
+    <h1>Settings</h1>
+    <div class="info">
+        <p>You can delete your account or change your username here...eventually.</p>
+        <p>Currently, none of these inputs work.<p>
+    </div>
+</section>
+
+<section class="settings-options">
+    <div class="change-username-section">
+        <h3>Your current username is {{ user.capitalize() }}</h3>
+
+        <div class="change-username-container">
+
+            <form  class="change-username">
+                <label for="change_username" name="change-username">Change Username: </p>
+                <input id="change_username" name="change_username" type="text" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="delete-account-section">
+        <h3>DANGER ZONE!</h3>
+
+        <form class="delete-account">
+            <button class="delete-account-button" type="submit">Delete Account</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
