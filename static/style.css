@@ -235,12 +235,27 @@ footer {
 /* Run History CSS */
 .all-history-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 100%;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     padding: 10px;
     margin: 10px;
+}
+
+.all-info-contianer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgb(123, 145, 145);
+    border-radius: 10px;
+    color: #2d5858;
+    padding: 10px;
+    margin: 4px;
 }
 
 .history {
@@ -273,8 +288,9 @@ footer {
 }
 
 .details {
-    display: inherit;
+    display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .log-photos-container :last-child {
@@ -419,7 +435,7 @@ footer {
     }
     
     .gallery img {
-        aspect-ratio: 1 / -1;
+        aspect-ratio: 1 / 1;
     }
 
     nav ul {

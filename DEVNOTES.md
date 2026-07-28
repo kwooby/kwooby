@@ -24,6 +24,9 @@ MINOR:
 
 TO DO:
     HIGH PRIORITY:
+        -Fix All History page
+            -I messed up on some CSS somewhere when I was editing the small-info container
+            -Added a new class ".all-info-container" use this to create new ruleset that only applies to all history page
         -Finish setting up the settings page
             -still need to create 'delete_account' function
         -Make login specific to mile-tracker
@@ -37,6 +40,7 @@ TO DO:
         -Create extra validation in registration page
             -Currently I believe different capitalizations work with any username, this is not good
             -Make it so that if the username is taken in any capitalization, it will not allow creation
+        -Honestly I really don't like how it looks after changing the CSS, fix it
 
 NOTES:
         -Small workday today, main priority was formatting the date correctly on the
