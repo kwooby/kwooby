@@ -53,15 +53,17 @@
 
             <button type="submit">Show</button>
         </form>
-        <br>
+
         {% for run in runs%}
             <div class="info-container">
-                
-                <strong><p>{{ run["run_date"] }}</p></strong>
-                <p>{{ run["activity"].capitalize() }}</p>
-                <p>{{ run["miles"] }} Miles</p>
+                <strong><p>{{ run["formatted_date"] }}</p></strong>
 
-                <form class="delete-log" action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                <div class="details">
+                    <p>{{ run["activity"].capitalize() }}</p>
+                    <p>{{ run["miles"] }} Miles</p>
+                </div>
+
+                <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
                     <button class="delete-button" type="submit">Delete</button>
                 </form>
             </div>

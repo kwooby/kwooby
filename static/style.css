@@ -122,20 +122,15 @@ footer {
 .log-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2px;
-    padding: 10px;
-    margin: 6px;
     align-items: start;
     justify-items: center;
     justify-content: center;
-    width: 100%;
     color: #073333;
+    margin-top: 0.5rem;
 }
 
 .log-container > :first-child, .log-container > :last-child {
     grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -144,14 +139,14 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 60%;
+    padding: 15px;
 }
 
 .log-details {
-    display: flex;
-    width: 50%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
     align-items: center;
 }
 
@@ -160,8 +155,6 @@ footer {
     flex-direction: column;
     justify-content: space-evenly;
     align-content: space-around;
-    padding: 15px;
-    margin: 10px;
     text-align: center;
 }
 
@@ -177,8 +170,8 @@ footer {
     background-color: white;
     color: #073333;
     text-align: center;
-    padding: 10px;
-    margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 /* Login CSS */
@@ -261,7 +254,6 @@ footer {
     display: grid;
     grid-template-rows: repeat(2, minmax(0, 1fr));
     align-items: center;
-    width: 95%;
     padding: 15px;
     text-align: center;
 }
@@ -273,12 +265,16 @@ footer {
     align-content: center;
     align-items: center;
     text-align: center;
-    width: 95%;
     border: 1px solid rgb(123, 145, 145);
     border-radius: 10px;
     color: #2d5858;
     padding: 10px;
     margin: 4px;
+}
+
+.details {
+    display: inherit;
+    flex-direction: column;
 }
 
 .log-photos-container :last-child {
@@ -388,14 +384,27 @@ footer {
 @media (max-width: 768px) {
     .log-container {
         grid-template-columns: 1fr;
+        width: 100%;
     }
 
     .log-photos-section {
-        width: 50%;
+        width: 100%;
     }
 
     .info-container {
-        width: 90%;
+        width: 100%;
+    }
+
+    .log-details-container {
+        width: 100%;
+    }
+
+    .monthly-miles-container {
+        width: 100%;
+    }
+
+    .landing {
+    width: 100%;
     }
 
     input,
@@ -406,6 +415,11 @@ footer {
 
     .gallery {
         grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .gallery img {
+        aspect-ratio: 1 / -1;
     }
 
     nav ul {

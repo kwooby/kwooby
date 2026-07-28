@@ -10,6 +10,41 @@ Working on improving features and styling.
 *****TURN DEBUG OFF BEFORE DEPLOYING*****
 
 .
+07/27/2026
+
+MAJOR:
+    -Date format changed
+        -In small history: month, day (Jul 27)
+        -In all history: month, day, year (July 27, 2026)
+    -Started working on mobile layout for mile-tracker app
+
+MINOR:
+    -Changed log activity template
+        -Might change later, I don't think I like the all vertical it feels too tall
+
+TO DO:
+    HIGH PRIORITY:
+        -Finish setting up the settings page
+            -still need to create 'delete_account' function
+        -Make login specific to mile-tracker
+        -Create a demo page with items filled out already so that employers can look
+        around without having to create an account
+            -Make it read-only
+            -If anyone wants to actively use the tracker or any other apps, they must make an account
+    MINOR:
+        -Changed small history to read [ Date  Activity/Miles  Delete]
+            -More readable with the smaller format
+        -Create extra validation in registration page
+            -Currently I believe different capitalizations work with any username, this is not good
+            -Make it so that if the username is taken in any capitalization, it will not allow creation
+
+NOTES:
+        -Small workday today, main priority was formatting the date correctly on the
+        app
+        -Played around with the layout a bit, fixed the weird padding issue on the small activity history (bless, that was really bothering me)
+            -It was because of a weird 95% width rule in the child container CSS
+
+.
 07/26/2029
 
 MAJOR:
@@ -41,6 +76,10 @@ TO DO:
         around without having to create an account
             -Make it read-only
             -If anyone wants to actively use the tracker or any other apps, they must make an account
+        -Fix mobile layout
+            -Section element (especially on the mile tracker dash) padding is too thick
+            -Settings gets crazy if you scale it too small
+            -Reduce mobile gallery to 4 pictures, currently it's 6 per page
 
     MINOR:
         -Add delete feature for photos
@@ -50,8 +89,8 @@ TO DO:
         -Tidy up html pages
         -Continued CSS styling
 
-NOTES:
-    -Keeping 'debug-users' until I can confirm the users and DB are functional
+    NOTES:
+        -Keeping 'debug-users' until I can confirm the users and DB are functional
 
 .
 07/24/2026

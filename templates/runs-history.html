@@ -36,7 +36,7 @@
             <div class="info-container">
                 <strong><p>{{ run["activity"].capitalize() }}</p></strong>
                 <p>{{ run["miles"] }} Miles</p>
-                <p>{{ run["run_date"] }}</p>
+                <p>{{ run["formatted_date"] }}</p>
 
                 <form class="delete-log" action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
                     <button class="delete-button" type="submit">Delete</button>

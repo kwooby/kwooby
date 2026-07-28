@@ -131,9 +131,6 @@ def login():
 
     user = get_user(username)
 
-    print("LOGIN ATTEMPT: ", username)
-    print("FOUND USER: ", user)
-
     if user and check_password_hash(user["password_hash"], password):
         session["authenticated"] = True
         session["user_id"] = user["id"]
@@ -421,6 +418,9 @@ def runs_history():
         year=selected_year
         )
 
+    for run in runs:
+        run["formatted_date"] = run["run_date"].strftime("%b %d, %Y")
+
     return render_template(
         "runs-history.html",
         runs=runs,
@@ -463,6 +463,9 @@ def mile_tracker():
         activity,
         run_page,
     )
+
+    for run in runs:
+        run["formatted_date"] = run["run_date"].strftime("%b %d")
 
     total_miles = get_total_miles(user_id)
 
