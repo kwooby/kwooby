@@ -1,0 +1,17 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<section class="welcome-page">
+    <h1>Welcome to Kwoobtown</h1>
+    <p>This is going to be my portfolio website (created with Flask).</p>
+    <p>Currently, this portfolio holds: </p>
+
+    <ul class="project-list">
+        <li><a href="{{ url_for('dashboard') }}">Mile Tracker</li>
+    </ul>
+</section>
+
+{% endblock %}

@@ -12,10 +12,20 @@
 <header>
     <nav>
         <ul class="nav-bar">
-            <li><a href ="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('mile_tracker') }}">Mile Tracker For my Wife</a></li>
-            <li><a href="{{ url_for('settings') }}">Settings</a></li>
-            <li><a href="{{  url_for('logout') }}">Logout</a></li>
+
+            <li><a href ="{{ url_for('index') }}">Home</a></li>
+
+            <li class="dropdown">
+                <a href="{{ url_for('dashboard') }}">Mile Tracker</a>
+
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('runs_history') }}">History</a></li>
+                    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+                    <li><a href="{{  url_for('logout') }}">Logout</a></li>
+                </ul>
+            </li>
+
         </ul>
     </nav>
 </header>

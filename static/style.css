@@ -13,24 +13,34 @@ body {
     line-height: 1.6;
 }
 
+li {
+    list-style: none;
+}
+
 /* Header */
 header {
     background-color: #253538;
-    color: white;
     padding: 20px;
     text-align: center;
 }
 
 /* Navigation */
 nav {
-    background-color: #576e72;
     padding: 10px;
 }
 
+nav li {
+    border-radius: 5px;
+    padding: 7px;
+}
+
 nav ul {
+    background-color: #a1bbbb;
     list-style: none;
     display: flex;
     justify-content: center;
+    align-items: center;
+    border-radius: 5px;
     gap: 20px;
 }
 
@@ -40,7 +50,30 @@ nav a {
 }
 
 nav a:hover {
-    color: #ff9900;
+    color: #003342;
+}
+
+.small-history-container a:visited {
+    color: rgb(0, 66, 165);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border-radius: 0 0 5px 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 /* Main content */
@@ -99,6 +132,13 @@ button {
     justify-content: space-between;
 }
 
+.activity-page-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
 .register-button {
     width: fit-content;
     margin: 20px;
@@ -139,15 +179,34 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    width: 50%;
     padding: 15px;
 }
 
 .log-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.log-details > :last-child {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
+    grid-row: 1 / -1;
+    width: fit-content;
+    align-self: center;
+}
+
+.log-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    text-align: center;
+}
+
+.log-row > div {
+    display: flex;
+    flex-direction: column;
 }
 
 .log-photos-container {
@@ -244,9 +303,10 @@ footer {
     margin: 10px;
 }
 
-.all-info-contianer {
+.all-info-container {
     display: flex;
     flex-direction: row;
+    width: 100%;
     justify-content: space-around;
     align-content: center;
     align-items: center;
@@ -262,6 +322,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     width: 100%;
 }
 
@@ -269,8 +330,8 @@ footer {
     display: grid;
     grid-template-rows: repeat(2, minmax(0, 1fr));
     align-items: center;
-    padding: 15px;
     text-align: center;
+    padding: 15px;
 }
 
 .info-container {
@@ -331,7 +392,6 @@ footer {
     align-items: center;
     width: 95%;
     color: #073333;
-    margin: 10px;
     padding: 15px;
 }
 
@@ -416,6 +476,26 @@ footer {
     }
 
     .monthly-miles-container {
+        width: 100%;
+    }
+
+    .all-history-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .history {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .history-filters {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .all-info-container {
         width: 100%;
     }
 

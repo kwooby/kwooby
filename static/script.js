@@ -3,8 +3,7 @@ console.log("JavaScript connected!")
 const password = document.getElementById("password")
 const button = document.getElementById("show-password")
 
-const logRunForm = document.querySelector(".log-details");
-const confirmDelete = document.querySelector(".delete-log");
+const confirmDelete = document.querySelector(".delete-form");
 
 if (button) {
     button.addEventListener("click", function() {

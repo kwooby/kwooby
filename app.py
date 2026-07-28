@@ -72,10 +72,13 @@ def create_table():
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('portfolio/index.html')
 
-@app.route("/register_user", methods=["GET", "POST"])
+@app.route("/mile-tracker/register_user", methods=["GET", "POST"])
 def register_user():
+    if request.method == "GET":
+        return render_template("mile-tracker/register-user.html")
+        
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -115,46 +118,41 @@ def register_user():
 
                 connection.commit()
 
-            return redirect(url_for("index"))
+            return redirect(url_for("login"))
 
         except psycopg2.IntegrityError:
             flash("Username already exists")
             return redirect(url_for("register_user"))
 
-    return render_template("register-user.html")
-
-@app.route("/login", methods=["POST"])
+@app.route("/mile-tracker/login", methods=["GET", "POST"])
 def login():
 
-    username = request.form["username"]
-    password = request.form["password"]
+    if request.method == "GET":
+        return render_template("mile-tracker/login.html")
 
-    user = get_user(username)
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-    if user and check_password_hash(user["password_hash"], password):
-        session["authenticated"] = True
-        session["user_id"] = user["id"]
-        return redirect(url_for("home"))
-    else:
-        return render_template("index.html", error="Invalid username or password")
+        user = get_user(username)
+
+        if user and check_password_hash(user["password_hash"], password):
+            session["authenticated"] = True
+            session["user_id"] = user["id"]
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template("mile-tracker/login.html", error="Invalid username or password")
 
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
-@app.route("/home")
-def home():
-    if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
-    
-    return render_template("home.html")
-
 @app.route("/delete-run/<int:run_id>", methods=["POST"])
 def delete_run(run_id):
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
-    
+        return redirect(url_for('login'))
+
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute("""
@@ -166,12 +164,12 @@ def delete_run(run_id):
 
     flash("Run deleted.")
 
-    return redirect("/mile-tracker")
+    return redirect("/mile-tracker/dashboard")
 
 @app.route("/log-details", methods=["POST"])
 def log_details():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
     user_id = session["user_id"]
     
@@ -181,7 +179,7 @@ def log_details():
         miles = float(request.form["miles"])
     except ValueError:
         flash("Please enter a number")
-        return redirect("/mile-tracker")
+        return redirect("/mile-tracker/dashboard")
     
     run_date = request.form["run_date"]
 
@@ -195,22 +193,22 @@ def log_details():
         connection.commit()
 
     flash("Miles logged successfully!")
-    return redirect('/mile-tracker')
+    return redirect('/mile-tracker/dashboard')
 
 @app.route("/log-photos", methods=["POST"])
 def log_photos():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
         
     photo = request.files["log_photos"]
 
     if photo.filename == "":
         flash("Please select a photo")
-        return redirect('/mile-tracker')
+        return redirect('/mile-tracker/dashboard')
 
     if not allowed_file(photo.filename):
         flash("Invalid file type")
-        return redirect('/mile-tracker')
+        return redirect('/mile-tracker/dashboard')
 
     filename = secure_filename(photo.filename)
     unique_filename = str(uuid.uuid4()) + "_" + filename
@@ -236,11 +234,11 @@ def log_photos():
 
     flash('Photo logged successfully!')
 
-    return redirect('/mile-tracker')
+    return redirect('/mile-tracker/dashboard')
 
 def get_runs(user_id, activity=None, page=1, history=False, year=None):
     
-    runs_per_page = 5
+    runs_per_page = 6
     offset = (page - 1) * runs_per_page
 
     where_clauses = ["user_id = %s"]
@@ -274,7 +272,12 @@ def get_runs(user_id, activity=None, page=1, history=False, year=None):
     if history:
         return runs
 
-    return runs, len(runs) == runs_per_page
+    has_next_runs = len(runs) > runs_per_page
+
+    if has_next_runs:
+        runs=runs[:runs_per_page]
+
+    return runs, has_next_runs
 
 def get_photos(user_id, page=1):
     
@@ -396,7 +399,7 @@ def get_user(username):
 @app.route("/runs-history")
 def runs_history():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
     user_id = session["user_id"]
 
@@ -422,7 +425,7 @@ def runs_history():
         run["formatted_date"] = run["run_date"].strftime("%b %d, %Y")
 
     return render_template(
-        "runs-history.html",
+        "mile-tracker/runs-history.html",
         runs=runs,
         user=display_user,
         total_miles=total_miles,
@@ -430,11 +433,11 @@ def runs_history():
         years=years,
         )
 
-@app.route("/mile-tracker")
-def mile_tracker():
+@app.route("/mile-tracker/dashboard")
+def dashboard():
     
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
     user_id = session["user_id"]
 
@@ -476,7 +479,7 @@ def mile_tracker():
     monthly_miles = get_monthly_miles(user_id, year=selected_year)
 
     return render_template(
-        "mile-tracker.html",
+        "mile-tracker/dashboard.html",
         runs=runs,
         photos=photos,
         user=display_user,
@@ -490,17 +493,17 @@ def mile_tracker():
         years=years
     )
 
-@app.route("/settings")
+@app.route("/mile-tracker/settings")
 def settings():
     if not session.get("authenticated") or "user_id" not in session:
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
     user_id= session["user_id"]
 
     display_user=get_username(user_id)
 
     return render_template(
-        "settings.html",
+        "mile-tracker/settings.html",
         user=display_user,
     )
 
@@ -516,4 +519,4 @@ def debug_users():
 create_table()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

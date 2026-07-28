@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'portfolio/base.html' %}
 
 {% block title %}Mile Tracker{% endblock %}
 
@@ -21,18 +21,27 @@
     <section class = "log-details-container">
         <h2>Log Activity</h2>
         <form class="log-details" method="POST" action="{{ url_for('log_details') }}">
+            <div class="log-row">
+                <div>
+                <label for="activity">Activity: </label>
+                    <select name="activity" id="activity">
+                        <option value="walk">Walk</option>
+                        <option value="run">Run</option>
+                    </select>
+                </div>
 
-            <label for="activity">Activity: </label>
-            <select name="activity" id="activity">
-                <option value="walk">Walk</option>
-                <option value="run">Run</option>
-            </select>
+                <div>
+                    <label for="miles">Miles: </label>
+                    <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
+                </div>
+            </div>
 
-            <label for="miles">Miles: </label>
-            <input id="miles" name="miles" type="number" min="0" max="10" step="0.1" required>
-
-            <label for="run_date">Date: </label>
-            <input id="run_date" name="run_date" type="date" required>
+            <div class="log-row">
+                <div>
+                    <label for="run_date">Date: </label>
+                    <input id="run_date" name="run_date" type="date" required>
+                </div>
+            </div>
 
             <button type="submit">Log Activity</button>
         </form>
@@ -40,9 +49,9 @@
 
     <section class="small-history-container">
         <h3>Activity History</h3>
-        <p>You can see the history of ALL your runs <a href="/runs-history">HERE</a></p>
+        <p>You can see the history of ALL your runs <a href="{{ url_for('runs_history') }}">HERE</a></p>
         
-        <form class="filter-by-activity" method="GET" action="{{ url_for('mile_tracker') }}">
+        <form class="filter-by-activity" method="GET" action="{{ url_for('dashboard') }}">
             
             <label for="activity-filter">Filter by Activity</label>
             <select name="activity" id="activity-filter">
@@ -63,21 +72,21 @@
                     <p>{{ run["miles"] }} Miles</p>
                 </div>
 
-                <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                <form class="delete-form" action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
                     <button class="delete-button" type="submit">Delete</button>
                 </form>
             </div>
         {% endfor %}
 
-        <div class="page-buttons">
+        <div class="activity-page-buttons">
             {% if run_page > 1 %}
-                <a href="{{ url_for('mile_tracker', run_page=run_page-1) }}">
+                <a href="{{ url_for('dashboard', run_page=run_page-1) }}">
                     <button>Previous</button>
                 </a>
             {% endif %}
 
             {% if has_next_runs %}
-                <a href="{{ url_for('mile_tracker', run_page=run_page+1) }}">
+                <a href="{{ url_for('dashboard', run_page=run_page+1) }}">
                     <button>Next</button>
                 </a>
             {% endif %}
@@ -88,13 +97,16 @@
 
     <h3>Monthly Totals</h3>
 
-    <form class="filter-by-year" method="GET" action="{{ url_for('mile_tracker') }}">
+    <form class="filter-by-year" method="GET" action="{{ url_for('dashboard') }}">
         <label for="year-filter">Filter by Year</label>
         <select name="year" id="year-filter">
-            <option value="">Select Year</option>
+            <option value="">All Years</option>
 
             {% for y in years %}
-                <option value="{{ y }}">{{ y }}</option>
+                <option value="{{ y }}"
+                    {% if y == selected_year %}selected{% endif %}>
+                    {{ y }}
+                </option>
             {% endfor %}
         </select>
 
@@ -137,13 +149,13 @@
 
     <div class="page-buttons">
         {% if photo_page > 1 %}
-            <a href="{{ url_for('mile_tracker', photo_page=photo_page-1) }}">
+            <a href="{{ url_for('dashboard', photo_page=photo_page-1) }}">
                 <button>Previous</button>
             </a>
         {% endif %}
 
         {% if has_next_photo %}
-            <a href="{{ url_for('mile_tracker', photo_page=photo_page+1) }}">
+            <a href="{{ url_for('dashboard', photo_page=photo_page+1) }}">
                 <button>Next</button>
             </a>
         {% endif %}

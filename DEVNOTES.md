@@ -1,13 +1,72 @@
 # Mile-Tracker and Website Development - DEVNOTES
 
+*****TURN DEBUG OFF BEFORE DEPLOYING*****
+
 ## CURRENT STATUS
 
-Currently deployed and functional.
-Working on improving features and styling.
+Current State
+
+    -Deployment: Complete
+
+    -Authentication: Complete
+
+    -Gallery: Complete
+
+    -Cloudinary: Complete
+
+    -Postgres: Complete
+
+    -Dashboard: Complete
+
+Known Issues
+    -Settings page
 
 ## Debug Notes
 
-*****TURN DEBUG OFF BEFORE DEPLOYING*****
+.
+07/28/2026
+
+MAJOR:
+    -Refactored template pages
+        -Added mile-tracker folder in templates with related html pages
+        -Added portfolio folder for basic templates
+    -Login is specific to the Mile Tracker, the rest of the site is accessible without a password now
+    -Renamed mile_tracker to dashboard for clarity
+    -Gave nav tabs dropdown option
+        -Mile Tracker now drops down to options for 'dashboard', 'settings', 'history', and 'logout'
+
+MINOR:
+    -Changed home page visuals
+        -Added direct link to mile tracker (this is a bit unnecessary since it's on the navbar but for now it's fine)
+    -The logs on the all runs history is fixed :')
+        -I mispelled container T-T
+        -It works as expected now with the proper name attached to the CSS
+    -Log activity form feels much better
+        -Added divs to each form label and input in order to align them properly
+    -Mobile layout is now one single, centered column
+    -CSS changes:
+        -Link hover changed to a darker blue
+        -Visited links now show as a lighter blue
+
+TO DO:
+    HIGH PRIORITY:
+        -Finish setting up the settings page
+            -still need to create 'delete_account' function
+        -Create a demo page with items filled out already so that employers can look
+        around without having to create an account
+            -Make it read-only
+            -If anyone wants to actively use the tracker or any other apps, they must make an account
+    MINOR:
+        -Create extra validation in registration page
+            -Currently I believe different capitalizations work with any username, this is not good
+            -Make it so that if the username is taken in any capitalization, it will not allow creation
+
+NOTES:
+    -Good workday, mainly fixing UX and UI problems, making things more accessible and readable
+    -Biggest win is refactoring the templates folder, this reads much better now
+    -Very happy about how the mile tracker looks now
+    -Debating whether or not tomove some of the dashboard around on the desktop layout, but thats a far away issue
+    -I still want to maybe do a random photo, but that might also be something I have on the lowest priority
 
 .
 07/27/2026

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'portfolio/base.html' %}
 
 {% block title %}Login{% endblock %}
 
@@ -6,7 +6,7 @@
 <div class="login-landing">
     <h1 class="welcome-title">Welcome to Kwooby</h1>
 
-        <form class="login" action="/login" method="POST">
+    <form class="login" action="/mile-tracker/login" method="POST">
 
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" maxlength="20" required>
