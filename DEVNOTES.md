@@ -24,6 +24,25 @@ Known Issues
 ## Debug Notes
 
 .
+07/29/2026
+
+NOTES:
+    -Usernames are now case-insensitive
+        -Usernames are stored in the database by default with .lower()
+        -Also added .strip()
+
+TO DO:
+    HIGH PRIORITY:
+        -Finish setting up the settings page
+            -still need to create 'delete_account' function
+        -Create a demo page with items filled out already so that employers can look
+        around without having to create an account
+            -Make it read-only
+            -If anyone wants to actively use the tracker or any other apps, they must make an account
+    MINOR:
+        -Add max-width to monthly-miles, all-history CSS
+
+.
 07/28/2026
 
 MAJOR:
@@ -60,6 +79,7 @@ TO DO:
         -Create extra validation in registration page
             -Currently I believe different capitalizations work with any username, this is not good
             -Make it so that if the username is taken in any capitalization, it will not allow creation
+        -Add max-width to monthly-miles, all-history
 
 NOTES:
     -Good workday, mainly fixing UX and UI problems, making things more accessible and readable

@@ -80,7 +80,7 @@ def register_user():
         return render_template("mile-tracker/register-user.html")
         
     if request.method == "POST":
-        username = request.form["username"]
+        username = request.form["username"].strip().lower()
         password = request.form["password"]
         confirm_password = request.form["confirm-password"]
 
@@ -109,20 +109,13 @@ def register_user():
                         VALUES (%s, %s)
                     """, (username, password_hash))
 
-                    cursor.execute(
-                        "SELECT username FROM users WHERE username = %s",
-                        (username,)
-                    )
-
-                    check = cursor.fetchone()
-
                 connection.commit()
-
-            return redirect(url_for("login"))
 
         except psycopg2.IntegrityError:
             flash("Username already exists")
             return redirect(url_for("register_user"))
+
+        return redirect(url_for("login"))
 
 @app.route("/mile-tracker/login", methods=["GET", "POST"])
 def login():
