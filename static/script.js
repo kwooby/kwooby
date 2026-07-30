@@ -7,7 +7,7 @@ const confirmPasswordButton = document.getElementById("show-confirm-password")
 
 
 const confirmDelete = document.querySelector(".delete-form");
-const confirmDeletePhoto = document.querySelectorAll(".delete-photo-form");
+const confirmDeletePhoto = document.querySelector(".delete-photo-form");
 const confirmDeleteAccount = document.querySelector(".delete-account");
 
 if (button) {
