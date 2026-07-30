@@ -18,10 +18,47 @@ Current State
 
     -Dashboard: Complete
 
-Known Issues
-    -Settings page
+    -Settings: Complete
 
 ## Debug Notes
+
+.
+07/30/2026
+
+MAJOR:
+    -Settings page works!
+        -Change username changes username
+            -Does not allow change if current username is same as new username
+            -Added password confirmation for extra validation
+        -Delete account deletes account
+            -Added password confirmation and confirm delete account eventListener in JS
+        -Flash added at the top of every page
+    -Delete photo button added
+        -Deletes from both the Database and Cloudinary
+
+MINOR:
+    -Padding on dashboard elements fixed
+        -They not sit centered and close to each other, this avoids larger screens having large gaps between the sections
+    -Show password was not working on the confirm password on the register page
+        -Just needed to implement the event listener in JS and change the ID for the confirm password
+        -confirm password still has 'show-password' class to keep CSS consistent
+    -Home page footer was link to dashboard; fixed
+        -a tag not closed
+    -Home page restyled
+        -Centered all content
+        -Added 'functional projects' and 'in progress' lists
+        -Any projects that are already functional and working have links attached for easy access from the home page
+    -Settings page restyled
+        -Mobile functional, single column
+    -Made nav bar dropdown slide into a nice fade transition, looks wonerful
+
+TO DO:
+    -Take videos and screenshots for those who just want to see what it looks like and what it does
+
+NOTES:
+    -We are about 96%-98% done with the mile tracker!!
+    -Extra features and improvements will be low priority
+        -All current features are functional and application is ready to be used :)
 
 .
 07/29/2026
@@ -41,6 +78,8 @@ TO DO:
             -If anyone wants to actively use the tracker or any other apps, they must make an account
     MINOR:
         -Add max-width to monthly-miles, all-history CSS
+        -Make a little delete button that appears on hover over the pictures
+            -Small, non-intrusive button in the upper right corner feels like it could work
 
 .
 07/28/2026

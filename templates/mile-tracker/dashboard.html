@@ -3,7 +3,7 @@
 {% block title %}Mile Tracker{% endblock %}
 
 {% block content %}
-<div class="landing">
+<div class="dashboard-landing">
     <h1 class="user-text" name="user-text">Hello {{ user.capitalize() }}! You have logged {{ total_miles }} miles so far!</h1>
     
     <div class="flash-message">
@@ -67,7 +67,7 @@
             <div class="info-container">
                 <strong><p>{{ run["formatted_date"] }}</p></strong>
 
-                <div class="details">
+                <div class="activity-details">
                     <p>{{ run["activity"].capitalize() }}</p>
                     <p>{{ run["miles"] }} Miles</p>
                 </div>
@@ -76,6 +76,8 @@
                     <button class="delete-button" type="submit">Delete</button>
                 </form>
             </div>
+        {% else %}
+            <p class="empty-message">You haven't logged any activity yet! Log your first run to get started.</p>
         {% endfor %}
 
         <div class="activity-page-buttons">
@@ -123,7 +125,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <p>Select a year to see monthly totals.</p>
+            <p class="empty-message">Log a run to see your monthly totals!</p>
         {% endif %}
     </div>
 </section>
@@ -143,9 +145,20 @@
 
 <section class="gallery">
     <h2 class="gallery-title">Gallery of Photos</h2>
-    {% for photo in photos %}
-        <img src="{{ photo['photo_filename'] }}">
-    {% endfor %}
+    
+        {% for photo in photos %}
+            <div class="photo-card">
+                <img src="{{ photo['photo_filename'] }}">
+
+                <form class="delete-photo-form" action="{{ url_for('delete_photo', photo_id=photo['id']) }}" method="POST">
+                    <button class="delete-photo-button" type="submit">Delete</button>
+                </form>
+            </div>
+
+                {% else %}
+                    <p class="empty-message">No photos logged yet! Upload one to get started.</p>
+
+                {% endfor %}
 
     <div class="page-buttons">
         {% if photo_page > 1 %}

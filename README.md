@@ -1,57 +1,123 @@
 # Mile Tracker
 
-A Flask-based mileage tracking application that allows users to log and view their running activities. The application supports multiple users, activity filtering, and photo uploads.
+A full-stack mileage tracking web application built with **Flask** and **PostgreSQL** that allows users to record, organize, and manage their running and walking activities. The application features secure authentication, cloud-based photo storage, filtering tools, and a responsive interface designed for both desktop and mobile devices.
+
+---
 
 ## Features
 
-- User selection for personalized tracking
-- Log running/walking activities
-- Track mileage and dates
-- Filter activities by type
-- View uploaded photos
-- Session-based access control
+### User Accounts
 
-## Technologies Used
+* Secure user registration and login
+* Session-based authentication
+* Password hashing for account security
+* Protected user-specific data
+* Account settings
 
-- Python
-- Flask
-- SQLite
-- HTML
-- CSS
-- Jinja Templates
+### Activity Tracking
 
-## Project Structure
+* Log running and walking activities
+* Record mileage and activity dates
+* Dashboard displaying recent activity
+* View complete activity history
+* Filter activities by type and year
+* Delete logged activities
 
-kwooby-site/
-│
-├── app.py
-├── requirements.txt
-├── templates/
-├── static/
-│ ├── css/
-│ └── images/
-└── .env
+### Photo Gallery
+
+* Upload activity photos
+* Cloud-hosted image storage with Cloudinary
+* Paginated photo gallery
+* Delete uploaded photos
+
+### User Experience
+
+* Responsive design for desktop and mobile
+* Clean and intuitive interface
+* Organized dashboard for quick access to recent activity
+
+---
+
+## Tech Stack
+
+### Backend
+
+* Python
+* Flask
+* PostgreSQL
+* Psycopg
+
+### Frontend
+
+* HTML5
+* CSS3
+* Jinja Templates
+* JavaScript
+
+### Cloud & Deployment
+
+* Cloudinary
+* Render
+
+---
 
 ## Database
 
-This project uses SQLite for data storage.
+The application uses PostgreSQL to manage application data.
 
-The database contains tables for:
+Current tables include:
 
-Users
-Logged activities
-Uploaded photos
+* Users
+* Activities
+* Photos
 
-During development, if database structure changes, the local database may need to be recreated.
+Passwords are securely hashed before storage.
+
+Uploaded images are stored in Cloudinary, while their secure URLs are saved in PostgreSQL.
+
+---
+
+## Authentication
+
+The application uses Flask sessions to manage authentication.
+
+Authenticated users can:
+
+* Create an account
+* Log in and log out securely
+* Access only their own activities and uploaded photos
+* Manage their personal data through the settings page
+
+---
+
+## What I Learned
+
+This project was an opportunity to gain hands-on experience building and deploying a full-stack web application. Along the way I learned how to:
+
+* Design relational databases using PostgreSQL
+* Build server-side applications with Flask
+* Implement secure authentication and session management
+* Integrate third-party services such as Cloudinary
+* Deploy production applications with Render
+* Work with pagination, filtering, and CRUD operations
+* Organize larger Flask projects as they continue to grow
+
+---
 
 ## Future Improvements
 
-Full user authentication system
-User account creation
-Improved photo management
-Additional statistics and charts
-Deployment improvements
+* Interactive charts and mileage statistics
+* Goal setting and progress tracking
+* Personal records and achievements
+* Search and advanced sorting
+* Password reset functionality
+* REST API for activity data
+* Additional user customization options
+
+---
 
 ## Author
 
-Alex Davis
+**Alex Davis**
+
+Built as a personal portfolio project while learning full-stack web development and expanding my experience with Flask, PostgreSQL, and modern web technologies.

@@ -141,6 +141,96 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
+@app.route("/mile-tracker/settings/change-username", methods=["POST"])
+def change_username():
+    if not session.get("authenticated") or "user_id" not in session:
+        return redirect(url_for('login'))
+
+    user_id = session["user_id"]
+
+    new_username = request.form["change-username"].strip().lower()
+    password = request.form["current-password"]
+
+    if not new_username:
+        flash("Username cannot be empty.")
+        return redirect(url_for('settings'))
+
+    if not password:
+        flash("Password cannot be empty.")
+        return redirect(url_for('settings'))
+
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT *
+                FROM users
+                WHERE id = %s
+            """, (user_id,))
+
+            user = cursor.fetchone()
+
+            if user["username"] == new_username:
+                flash("That's already your username!")
+                return redirect(url_for('settings'))
+
+            if not check_password_hash(user["password_hash"], password):
+                flash("Incorrect password.")
+                return redirect(url_for("settings"))
+
+            cursor.execute("""
+                UPDATE users
+                SET username = %s
+                WHERE id = %s
+            """, (new_username, user_id))
+
+        connection.commit()
+
+    flash("Username updated successfully.")
+    return redirect(url_for("settings"))
+
+@app.route("/mile-tracker/settings/delete-account", methods=["POST"])
+def delete_account():
+    if not session.get("authenticated") or "user_id" not in session:
+        return redirect(url_for('login'))
+
+    user_id = session["user_id"]
+
+    password = request.form["delete-current-password"]
+
+    if not password:
+        flash("Password cannot be empty")
+        return redirect(url_for('settings'))
+
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT *
+                FROM users
+                WHERE id = %s
+            """, (user_id,))
+
+            user = cursor.fetchone()
+
+            if not user:
+                flash("User not found.")
+                session.clear()
+                return redirect(url_for('login'))
+
+            if not check_password_hash(user["password_hash"], password):
+                flash("Incorrect password.")
+                return redirect(url_for('settings'))
+            
+            cursor.execute("""
+                DELETE FROM users
+                WHERE id = %s
+            """, (user_id,))
+
+        connection.commit()
+        session.clear()
+
+    flash("Your account has been deleted.")
+    return redirect(url_for('index'))
+
 @app.route("/delete-run/<int:run_id>", methods=["POST"])
 def delete_run(run_id):
     if not session.get("authenticated") or "user_id" not in session:
@@ -228,6 +318,45 @@ def log_photos():
     flash('Photo logged successfully!')
 
     return redirect('/mile-tracker/dashboard')
+
+@app.route("/delete-photo/<int:photo_id>", methods=["POST"])
+def delete_photo(photo_id):
+    if not session.get("authenticated") or "user_id" not in session:
+        return redirect(url_for('login'))
+
+    user_id = session["user_id"]
+
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT photo_filename
+                FROM photos
+                WHERE id = %s and user_id = %s
+            """, (photo_id, user_id))
+
+            photo = cursor.fetchone()
+
+            if photo is None:
+                flash("Photo not found.")
+                return redirect(url_for('dashboard'))
+
+            photo_url = photo["photo_filename"]
+
+            upload_path = photo_url.split("/upload/")[1]
+            public_id = upload_path.split("/", 1)[1]
+            public_id = public_id.rsplit(".", 1)[0]
+
+            cloudinary.uploader.destroy(public_id)
+
+            cursor.execute("""
+                DELETE FROM photos
+                WHERE id = %s AND user_id = %s
+            """, (photo_id, user_id))
+
+            connection.commit()
+
+    flash("Photo deleted.")
+    return redirect(url_for('dashboard'))
 
 def get_runs(user_id, activity=None, page=1, history=False, year=None):
     

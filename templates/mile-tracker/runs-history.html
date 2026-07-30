@@ -45,6 +45,9 @@
                     <button class="delete-button" type="submit">Delete</button>
                 </form>
             </div>
+
+        {% else %}
+            <p class="empty-message">You haven't logged any activity yet! Log your first run on the <a href="{{ url_for('dashboard') }}">Dashboard</a> to get started.</p>
         {% endfor %}
     </div>
 </section>

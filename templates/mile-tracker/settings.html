@@ -4,12 +4,19 @@
 
 {% block content %}
 
-<section class="landing">
+<section class="settings-landing">
     <h1>Settings</h1>
-    <div class="info">
-        <p>You can delete your account or change your username here...eventually.</p>
-        <p>Currently, none of these inputs work.<p>
+
+    <div class="flash-message">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </div>
+
 </section>
 
 <section class="settings-options">
@@ -18,9 +25,18 @@
 
         <div class="change-username-container">
 
-            <form  class="change-username">
-                <label for="change_username" name="change-username">Change Username: </p>
-                <input id="change_username" name="change_username" type="text" required>
+            <form class="change-username" action="{{ url_for('change_username') }}" method="POST">
+
+                <div class="one">
+                    <label for="change-username">Change Username: </label>
+                    <input id="change-username" name="change-username" type="text" required>
+                </div>
+
+
+                <div class="two">
+                    <label for="current-password">Current Password:</label>
+                    <input id="change-current-password" name="current-password" type="password" required>
+                </div>
 
                 <button type="submit">Submit</button>
             </form>
@@ -30,7 +46,12 @@
     <div class="delete-account-section">
         <h3>DANGER ZONE!</h3>
 
-        <form class="delete-account">
+        <p>Deleting your account will permanently remove your runs and photos. This action cannot be undone.</p>
+
+        <form class="delete-account" action="{{ url_for('delete_account') }}" method="POST">
+            <label for="current-password">Current Password:</label>
+            <input id="delete-current-password" name="delete-current-password" type="password" required>
+
             <button class="delete-account-button" type="submit">Delete Account</button>
         </form>
     </div>
