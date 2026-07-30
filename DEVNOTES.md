@@ -53,6 +53,13 @@ MINOR:
     -Made nav bar dropdown slide into a nice fade transition, looks wonerful
 
 TO DO:
+    MAJOR:
+        -Confirm delete only works for one or the other between the runs and the photos
+            -Making both .querySelectorAll lets photo delete confirm work
+            -Making both .querySelector lets runs delete confirm work
+                -First photo will ask for confirm delete, as expected
+                -
+            -Making just photos .querySelectorAll makes neither work
     -Take videos and screenshots for those who just want to see what it looks like and what it does
 
 NOTES:
