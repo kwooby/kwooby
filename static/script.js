@@ -6,9 +6,9 @@ const button = document.getElementById("show-password")
 const confirmPasswordButton = document.getElementById("show-confirm-password")
 
 
-const confirmDelete = document.querySelector(".delete-form");
-const confirmDeleteAccount = document.querySelector(".delete-account")
-const confirmDeletePhoto = document.querySelector(".delete-photo-form")
+const confirmDelete = document.querySelectorAll(".delete-form");
+const confirmDeletePhoto = document.querySelectorAll(".delete-photo-form");
+const confirmDeleteAccount = document.querySelector(".delete-account");
 
 if (button) {
     button.addEventListener("click", function() {
