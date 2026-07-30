@@ -54,13 +54,11 @@ MINOR:
 
 TO DO:
     MAJOR:
-        -Confirm delete only works for one or the other between the runs and the photos
-            -Making both .querySelectorAll lets photo delete confirm work
-            -Making both .querySelector lets runs delete confirm work
-                -First photo will ask for confirm delete, as expected
-                -
-            -Making just photos .querySelectorAll makes neither work
-    -Take videos and screenshots for those who just want to see what it looks like and what it does
+        -Confirm delete DOES NOT WORK FOR EITHER
+            -QueryAll makes neither work, not even the first element is confirmed on delete
+            -QuerySelector works as expected, only prompting confirm for first of its kind
+    MINOR:
+        -Take videos and screenshots for those who just want to see what it looks like and what it does
 
 NOTES:
     -We are about 96%-98% done with the mile tracker!!
