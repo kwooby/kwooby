@@ -6,8 +6,8 @@ const button = document.getElementById("show-password")
 const confirmPasswordButton = document.getElementById("show-confirm-password")
 
 
-const confirmDelete = document.querySelector(".delete-form");
-const confirmDeletePhoto = document.querySelector(".delete-photo-form");
+const confirmDeleteRun = document.querySelectorAll(".delete-run-form");
+const confirmDeletePhoto = document.querySelectorAll(".delete-photo-form");
 const confirmDeleteAccount = document.querySelector(".delete-account");
 
 if (button) {
@@ -38,23 +38,24 @@ if (confirmPasswordButton) {
     });
 }
 
-if (confirmDelete) {
-    confirmDelete.addEventListener("submit", function(event) {
+confirmDeleteRun.forEach(form => {
+    form.addEventListener("submit", function(event) {
 
         if (!confirm("Are you sure you want to delete this entry?")) {
             event.preventDefault();
         }
-    });
-};
+    })
+})
 
-if (confirmDeletePhoto) {
-    confirmDeletePhoto.addEventListener("submit", function(event) {
 
-        if (!confirm("Are you sure you want to delete this photo?")) {
+confirmDeletePhoto.forEach(form => {
+    form.addEventListener("submit", function(event) {
+
+        if (!confirm("Are you sure you want to delete this entry?")) {
             event.preventDefault();
         }
-    });
-}
+    })
+})
 
 if (confirmDeleteAccount) {
     confirmDeleteAccount.addEventListener("submit", function(event){

@@ -1,4 +1,4 @@
-# Mile-Tracker and Website Development - DEVNOTES
+# Mile-Tracker - DEVNOTES
 
 *****TURN DEBUG OFF BEFORE DEPLOYING*****
 
@@ -21,6 +21,17 @@ Current State
     -Settings: Complete
 
 ## Debug Notes
+
+.
+08/04/2026
+
+-Fixed confirm delete bug
+    -Updated the JavaScript to iterate over all delete forms using forEach(), allowing a confirmation event listener to be attached to each delete button individually
+    -All routes updated
+-Navbar padding and gap for dropdown reduced
+    -Dropdown looks more compressed now, feels better to look at
+    -nav li padding reduced from 7px to 4px
+    -nav ul gap reduced from 20px to 7px
 
 .
 07/30/2026
@@ -59,11 +70,12 @@ TO DO:
             -QuerySelector works as expected, only prompting confirm for first of its kind
     MINOR:
         -Take videos and screenshots for those who just want to see what it looks like and what it does
+        -Nav gap between links looks a little excessive
 
 NOTES:
     -We are about 96%-98% done with the mile tracker!!
     -Extra features and improvements will be low priority
-        -All current features are functional and application is ready to be used :)
+        -All important features are functional and application is ready to be used :)
 
 .
 07/29/2026

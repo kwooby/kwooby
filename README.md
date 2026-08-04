@@ -90,20 +90,6 @@ Authenticated users can:
 
 ---
 
-## What I Learned
-
-This project was an opportunity to gain hands-on experience building and deploying a full-stack web application. Along the way I learned how to:
-
-* Design relational databases using PostgreSQL
-* Build server-side applications with Flask
-* Implement secure authentication and session management
-* Integrate third-party services such as Cloudinary
-* Deploy production applications with Render
-* Work with pagination, filtering, and CRUD operations
-* Organize larger Flask projects as they continue to grow
-
----
-
 ## Future Improvements
 
 * Interactive charts and mileage statistics
