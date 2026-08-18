@@ -101,21 +101,23 @@ mile-tracker/ ---> Separation from portfolio repository in progress.
 
 ## Current Work
 
-The portfolio is currently being developed alongside the Integration Hub.
+*The portfolio is currently being developed alongside the Integration Hub.*
 
 Current priorities include:
-    - Completing the Integration Hub frontend
-    - Connecting the frontend to the backend API
-    - Refining the portfolio presentation
-    - Improving project documentation
-    - Preparing projects for deployment and job applications
+
+- Completing the Integration Hub frontend
+- Connecting the frontend to the backend API
+- Refining the portfolio presentation
+- Improving project documentation
+- Preparing projects for deployment and job applications
 
 ## Future Plans
 
 Planned improvements include:
-    - Completing and deploying the Integration Hub
-    - Updating the portfolio with additional project information
-    - Improving project and portfolio presentation and documentation
-    - Refining the Mile Tracker project
-        - Separating and refactoring mile tracker as a standalone project
-    - Creating a full-stack Hallownest REST API fan project (Hollow Knight)
+
+- Completing and deploying the Integration Hub
+- Updating the portfolio with additional project information
+- Improving project and portfolio presentation and documentation
+- Refining the Mile Tracker project
+  - Separating and refactoring mile tracker as a standalone project
+- Creating a full-stack Hallownest REST API fan project (Hollow Knight)
