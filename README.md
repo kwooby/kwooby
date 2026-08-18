@@ -1,109 +1,120 @@
-# Mile Tracker
+# Developer Portfolio
 
-A full-stack mileage tracking web application built with **Flask** and **PostgreSQL** that allows users to record, organize, and manage their running and walking activities. The application features secure authentication, cloud-based photo storage, filtering tools, and a responsive interface designed for both desktop and mobile devices.
+Personal developer portfolio showcasing my projects, technical experience, and continued growth as a software developer.
 
----
+The portfolio serves as a central place to explore my work, with individual projects maintained in their own repositories.
 
-## Features
+## About
 
-### User Accounts
+This portfolio was created to document my transition into software development and showcase the projects I have built while developing my skills in frontend, backend, databases, and full-stack application development.
 
-* Secure user registration and login
-* Session-based authentication
-* Password hashing for account security
-* Protected user-specific data
-* Account settings
+I am particularly interested in building practical applications and understanding how the different parts of a software system work together.
 
-### Activity Tracking
+## Featured Projects
 
-* Log running and walking activities
-* Record mileage and activity dates
-* Dashboard displaying recent activity
-* View complete activity history
-* Filter activities by type and year
-* Delete logged activities
+### Integration Hub
 
-### Photo Gallery
+A full-stack application designed to simulate an integration platform for managing and coordinating business resources.
 
-* Upload activity photos
-* Cloud-hosted image storage with Cloudinary
-* Paginated photo gallery
-* Delete uploaded photos
+The project includes:
 
-### User Experience
+- Orders
+- Inventory
+- Products
+- Payments
+- Shipments
+- Notifications
+- Users
 
-* Responsive design for desktop and mobile
-* Clean and intuitive interface
-* Organized dashboard for quick access to recent activity
+**Technologies:**
 
----
+- React
+- Flask
+- Python
+- JavaScript
+- PostgreSQL
+- SQLAlchemy
+- REST API
 
-## Tech Stack
+The Integration Hub is currently my primary full-stack project and focuses on building a complete application from database and backend API development through frontend integration.
 
-### Backend
+### Mile Tracker
 
-* Python
-* Flask
-* PostgreSQL
-* Psycopg
+A web application for tracking running mileage and progress over time.
+
+**Technologies:**
+
+- Python
+- JavaScript
+- HTML
+- CSS
+- PostgreSQL
+
+The Mile Tracker was one of my earlier projects and has provided experience working with frontend development, data storage, and application functionality.
+
+## Technologies
+
+### Languages
+
+- Python
+- JavaScript
+- HTML
+- CSS
 
 ### Frontend
 
-* HTML5
-* CSS3
-* Jinja Templates
-* JavaScript
+- React
 
-### Cloud & Deployment
+### Backend
 
-* Cloudinary
-* Render
+- Flask
+- REST APIs
+- SQLAlchemy
 
----
+### Database
 
-## Database
+- PostgreSQL
 
-The application uses PostgreSQL to manage application data.
+### Tools
 
-Current tables include:
+- Git
+- GitHub
+- VS Code
 
-* Users
-* Activities
-* Photos
+## Repository Structure
 
-Passwords are securely hashed before storage.
+The portfolio and individual projects are maintained separately.
 
-Uploaded images are stored in Cloudinary, while their secure URLs are saved in PostgreSQL.
+```text
+portfolio/
+├── portfolio website
+└── README.md
 
----
+integration-hub/ ---> Already a separate API. Repository available to read.
+├── backend/
+├── frontend/
+└── README.md
 
-## Authentication
+mile-tracker/ ---> Separation from portfolio repository in progress.
+└── README.md
 
-The application uses Flask sessions to manage authentication.
+## Current Work
 
-Authenticated users can:
+The portfolio is currently being developed alongside the Integration Hub.
 
-* Create an account
-* Log in and log out securely
-* Access only their own activities and uploaded photos
-* Manage their personal data through the settings page
+Current priorities include:
+    - Completing the Integration Hub frontend
+    - Connecting the frontend to the backend API
+    - Refining the portfolio presentation
+    - Improving project documentation
+    - Preparing projects for deployment and job applications
 
----
+## Future Plans
 
-## Future Improvements
-
-* Interactive charts and mileage statistics
-* Goal setting and progress tracking
-* Personal records and achievements
-* Search and advanced sorting
-* Password reset functionality
-* REST API for activity data
-* Additional user customization options
-
----
-
-## Author
-
-**Alex Davis**
-
-Built as a personal portfolio project while learning full-stack web development and expanding my experience with Flask, PostgreSQL, and modern web technologies.
+Planned improvements include:
+    - Completing and deploying the Integration Hub
+    - Updating the portfolio with additional project information
+    - Improving project and portfolio presentation and documentation
+    - Refining the Mile Tracker project
+        - Separating and refactoring mile tracker as a standalone project
+    - Creating a full-stack Hallownest REST API fan project (Hollow Knight)
