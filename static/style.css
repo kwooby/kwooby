@@ -7,30 +7,21 @@
 
 /* Basic page styling */
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
     font-family: Arial, sans-serif;
-    background-color: rgb(230, 245, 245);
-    color: #06232e;
+    background-color: #d1e9e1;
+    color: #062e22;
+
     line-height: 1.6;
+    height: auto;
+    margin: 0;
 }
 
 li {
     list-style: none;
-}
-
-/* Home Page */
-.welcome-page {
-    text-align: center;
-}
-
-.project-list-container {
-    border: solid 1px #a1bbbb;
-    margin: 0.5rem auto;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.wip {
-    margin-top: 20px;
 }
 
 /* Links */
@@ -44,9 +35,18 @@ a:hover {
 
 /* Header */
 header {
-    background-color: #253538;
+    background-color: #21473e;
     padding: 20px;
     text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: #13443b;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
 }
 
 /* Navigation */
@@ -57,34 +57,37 @@ nav {
 nav li {
     border-radius: 5px;
     padding: 4px;
+    margin-top: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: center;
+
+    letter-spacing: 0.3;
+
+    height: 45px
 }
 
 nav ul {
-    background-color: #a1bbbb;
+    background-color: #bfd6d0;
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: solid #daece6 2px;
     border-radius: 5px;
     gap: 7px;
 }
 
-nav a {
-    color: white;
+nav a, nav a:visited {
+    color: rgb(39, 61, 54);
     text-decoration: none;
 }
 
 nav a:hover, nav a:hover:visited {
-    color: #003342;
-}
-
-nav a:visited {
     color: white;
 }
 
 .dropdown {
     position: relative;
-
 }
 
 .dropdown-menu {
@@ -94,6 +97,7 @@ nav a:visited {
     top: 100%;
     left: 0;
     border-radius: 0 0 5px 5px;
+
     list-style: none;
     padding: 0;
     margin: 0;
@@ -108,13 +112,98 @@ nav a:visited {
         visibility 0.2s;
 }
 
+.dropdown-item {
+    padding: 3px;
+    margin: 0;
+    height: 40px
+}
+
 .dropdown:hover .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-/* Main content */
+/* Home Page */
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100vh;
+
+    box-sizing: border-box;
+    align-items: center;
+    margin: auto;
+
+    border: solid #a9cac0 3px;
+}
+
+.project-list-container {
+    border: solid 1px #3f7061;
+    margin: 0.5rem auto;
+    padding: 10px;
+    border-radius: 5px;
+    width: 90vh;
+}
+
+.functional-description {
+    font-size: smaller;
+}
+
+.wip {
+    margin-top: 20px;
+}
+
+/* About */
+.about-section {
+    display: flex;
+    background-color: #bfd4ce;
+    gap: 10px;
+}
+
+.about-greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 9px 0;
+
+    color: rgb(26, 63, 57);
+}
+
+.about-text{
+    display: flex;
+    flex-direction: column;
+    border: solid 1px #d5eee6;
+    background-color: white;
+}
+
+.about-text p {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.about-picture {
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 150px;
+    padding-top: 20px;
+}
+
+.social-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    display: row;
+    gap: 10px
+}
+
+/* Mile Tracker Main content */
 main {
     width: 80%;
     max-width: 1200px;
@@ -197,14 +286,6 @@ button {
 button:hover {
     background-color: #b2cccc;
     color: #073333;
-}
-
-/* Footer */
-footer {
-    background-color: #253538;
-    color: white;
-    text-align: center;
-    padding: 15px;
 }
 
 /* Login CSS */
@@ -544,25 +625,49 @@ footer {
 
 /* Mobile Layout Overrides */
 @media (max-width: 768px) {
+    .welcome-page, 
+    .project-list-container,
     .log-container {
         grid-template-columns: 1fr;
         width: 100%;
     }
 
-    .log-photos-section {
+    .log-photos-section, 
+    .info-container,
+    .log-details-container,
+    .monthly-miles-container,
+    .all-info-container,
+    .landing {
         width: 100%;
     }
 
-    .info-container {
+    .about-section,
+    .about-extra-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
         width: 100%;
+        padding: 0;
     }
 
-    .log-details-container {
-        width: 100%;
+    .about-greeting {
+        margin-top: 8px;
     }
 
-    .monthly-miles-container {
-        width: 100%;
+    .social-container {
+        margin-bottom: 0;
+        padding-bottom: 0;
+
+    }
+
+    .about-picture {
+        width: 230px;
+        align-self: center;
+    }
+
+    .about-text p {
+        padding-top: 0;
+        margin-top: 0;
     }
 
     .all-history-container {
@@ -579,14 +684,6 @@ footer {
     .history-filters {
         display: flex;
         flex-direction: row;
-    }
-
-    .all-info-container {
-        width: 100%;
-    }
-
-    .landing {
-    width: 100%;
     }
 
     input,

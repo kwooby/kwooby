@@ -15,27 +15,26 @@
 </div>
 
 <section class="welcome-page">
-    <h1>Welcome to Kwoobtown</h1>
-    <p>This is my portfolio website (created with Flask).</p>
+    <h1>Hello, my name is Alex.</h1>
+    <p>This is my portfolio website. Look around.</p>
 
-    <div class="social"><a href="https://github.com/kwooby">GitHub</a>?</div>
+    <div class="social">Check out my <a href="https://github.com/kwooby">GitHub</a>.</div>
 
     <div class="project-list-container">
         <div class="functional-projects">
-            <h3>Functional projects</h3>
+            <h3>Projects</h3>
 
-            <ul class="finished-project-list">
-                <li><a href="{{ url_for('dashboard') }}">Mile Tracker</a></li>
-            </ul>
+                <h4><a href="{{ url_for('dashboard') }}">Mile Tracker</a></h4>
+                <p class="functional-description">A full-stack mileage tracking application built with Flask and PostGreSQL, 
+                featuring activity tracking, cloud photo storage, and filtering tools.</p>
         </div>
 
         <div class="wip">
-            <h3>In progress</h3>
+            <h3>In Progress</h3>
 
             <ul class="wip-list">
-                <li>Integration Hub (In Progress)</li>
-                <li>Hallownest REST API</li>
-                <li>About Page</li>
+                <li><a href="https://github.com/kwooby/integration-hub">Integration Hub</a> (In Development)</li>
+                <li>Hallownest REST API Fan Project (Next)</li>
             </ul>
         </div>
     </div>

@@ -69,10 +69,17 @@ def create_table():
 
         connection.commit()
 
+# PAGE ROUTES #
 
 @app.route("/")
 def index():
     return render_template('portfolio/index.html')
+
+@app.route("/about")
+def about():
+    return render_template('portfolio/about.html')
+
+# MILE-TRACKER CODE #
 
 @app.route("/mile-tracker/register_user", methods=["GET", "POST"])
 def register_user():
@@ -518,6 +525,8 @@ def get_user(username):
 
     return user
 
+# MILE-TRACKER PAGE ROUTES #
+
 @app.route("/runs-history")
 def runs_history():
     if not session.get("authenticated") or "user_id" not in session:
@@ -629,16 +638,8 @@ def settings():
         user=display_user,
     )
 
-@app.route("/debug-users")
-def debug_users():
-    with get_db_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT username FROM users")
-            users = cursor.fetchall()
-
-    return str([user["username"] for user in users])
 
 create_table()
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
