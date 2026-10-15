@@ -24,16 +24,47 @@
         <div class="functional-projects">
             <h3>Projects</h3>
 
-                <h4><a href="{{ url_for('dashboard') }}">Mile Tracker</a></h4>
-                <p class="functional-description">A full-stack mileage tracking application built with Flask and PostGreSQL, 
-                featuring activity tracking, cloud photo storage, and filtering tools.</p>
+                <section class="mile-tracker-container">
+                    <h4>
+                        <a href="{{ url_for('dashboard') }}">
+                            Mile Tracker
+                        </a>
+                    </h4>
+
+                    <p class="functional-description">
+                        A full-stack mileage tracking application built with Flask and PostGreSQL, 
+                    featuring activity tracking, cloud photo storage, and filtering tools.
+                    </p>
+                </section>
+
+                <section class="integration-hub-container">
+                    <h4>
+                        <a href="https://integration-hub-frontend-vsds.onrender.com/">
+                            Integration Hub
+                        </a>
+                    </h4>
+
+                    <p class="functional-description"><a href="https://github.com/kwooby/integration-hub">
+                        GitHub Repo
+                    </a></p>
+
+                    <p class="functional-description">
+                        A full stack integration and order management application designed to simulate
+                        how multiple business systems can communicate through a centralized API.
+                    </p>
+                    <p class="functional-description">
+                        Integration Hub provides a FLASK REST API backend by PostGreSQL with a React 
+                        frontend. Developed to providea a user-friendly interface for interacting with 
+                        the system.
+                    </p>
+                </section>
+
         </div>
 
         <div class="wip">
             <h3>In Progress</h3>
 
             <ul class="wip-list">
-                <li><a href="https://github.com/kwooby/integration-hub">Integration Hub</a> (In Development)</li>
                 <li>Hallownest REST API Fan Project (Next)</li>
             </ul>
         </div>

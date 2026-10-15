@@ -606,8 +606,18 @@ def dashboard():
     # Get list of years that have runs for this user so UI can present options
     years = get_available_years(user_id)
 
-    # Compute monthly aggregation restricted to the selected year (if provided)
-    monthly_miles = get_monthly_miles(user_id, year=selected_year)
+    # Compute monthly aggregation restricted to the selected year and activity
+    run_monthly_miles = get_monthly_miles(
+        user_id,
+        year=selected_year,
+        activity="run"
+    )
+
+    walk_monthly_miles = get_monthly_miles(
+        user_id,
+        year=selected_year,
+        activity="walk"
+    )
 
     return render_template(
         "mile-tracker/dashboard.html",
@@ -619,7 +629,8 @@ def dashboard():
         has_next_runs=has_next_runs,
         has_next_photo=has_next_photo,
         total_miles=total_miles,
-        monthly_miles=monthly_miles,
+        run_monthly_miles=run_monthly_miles,
+        walk_monthly_miles=walk_monthly_miles,
         selected_year=selected_year,
         years=years
     )

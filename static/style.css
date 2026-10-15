@@ -12,7 +12,7 @@ body {
     flex-direction: column;
     
     font-family: Arial, sans-serif;
-    background-color: #d1e9e1;
+    background-color: #a3dfd5;
     color: #062e22;
 
     line-height: 1.6;
@@ -26,23 +26,23 @@ li {
 
 /* Links */
 a, a:visited {
-    color: rgb(10, 100, 88);
+    color: rgb(0, 141, 122);
 }
 
 a:hover {
-    color: #002d33;
+    color: #006c7a;
 }
 
 /* Header */
 header {
-    background-color: #21473e;
-    padding: 20px;
+    background-color: #009e9e;
     text-align: center;
+    width: 100%;
 }
 
 /* Footer */
 footer {
-    background-color: #13443b;
+    background-color: #0d576d;
     color: white;
     text-align: center;
     padding: 15px;
@@ -67,18 +67,17 @@ nav li {
 }
 
 nav ul {
-    background-color: #bfd6d0;
+    background-color: #c0fff1;
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid #daece6 2px;
     border-radius: 5px;
     gap: 7px;
 }
 
 nav a, nav a:visited {
-    color: rgb(39, 61, 54);
+    color: rgb(18, 106, 117);
     text-decoration: none;
 }
 
@@ -135,11 +134,10 @@ nav a:hover, nav a:hover:visited {
     align-items: center;
     margin: auto;
 
-    border: solid #a9cac0 3px;
 }
 
 .project-list-container {
-    border: solid 1px #3f7061;
+    border: solid 1px #01c2b2;
     margin: 0.5rem auto;
     padding: 10px;
     border-radius: 5px;
@@ -157,7 +155,7 @@ nav a:hover, nav a:hover:visited {
 /* About */
 .about-section {
     display: flex;
-    background-color: #bfd4ce;
+    background-color: #d2fff7;
     gap: 10px;
 }
 
@@ -168,13 +166,13 @@ nav a:hover, nav a:hover:visited {
 
     padding: 9px 0;
 
-    color: rgb(26, 63, 57);
+    color: rgb(22, 71, 83);
 }
 
 .about-text{
     display: flex;
     flex-direction: column;
-    border: solid 1px #d5eee6;
+    border: solid 1px #c8ffee;
     background-color: white;
 }
 
@@ -245,7 +243,7 @@ section {
 
 /* Buttons */
 button {
-    background-color: #2d5858;
+    background-color: #3e7680;
     color: white;
     border: none;
     padding: 7px 10px;
@@ -410,19 +408,24 @@ button:hover {
     color: #073333;
     text-align: center;
     border-radius: 5px;
-    padding: 5px;
+    padding: 0 5px;
 }
 
 /* Dashboard Container */
 .log-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: fit-content;
+    width: 100%;
+
     align-items: start;
-    justify-items: center;
+    justify-items: stretch;
     justify-content: center;
+
     color: #073333;
+
     margin: 0.5rem auto;
+    gap: 10px;
+    margin-top: 0;
 }
 
 .log-container > :first-child, .log-container > :last-child {
@@ -434,6 +437,7 @@ button:hover {
 .log-details-container {
     display: flex;
     flex-direction: column;
+    justify-self: center;
     align-items: center;
     width: 50%;
     padding: 15px;
@@ -482,10 +486,13 @@ button:hover {
     justify-content: space-evenly;
     align-content: center;
     align-items: center;
+
     text-align: center;
+
     border: 1px solid rgb(123, 145, 145);
     border-radius: 10px;
     color: #2d5858;
+
     padding: 10px;
     margin: 4px;
 }
@@ -499,30 +506,29 @@ button:hover {
 /* Miles by Month */
 .monthly-miles-container {
     display: grid;
-    grid-template-columns: repeat(1fr);
+
     justify-items: center;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+
+    width: 100%;
     padding: 15px;
+    gap: 3px;
 }
 
-.monthly-results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
 
 .monthly-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+
     justify-content: space-evenly;
     justify-items: center;
     align-items: center;
+
     border: solid 1px rgb(123, 145, 145);
     border-radius: 5px;
-    width: 95%;
+    width: 100%;
+
     margin: 5px;
     padding: 10px;
 }
