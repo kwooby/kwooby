@@ -114,17 +114,31 @@
 
         <button type="submit">Show</button>
     </form>
+
     <br>
     <div class="monthly-results">
-        {% if monthly_miles %}
-            {% for month_num, month_name, miles in monthly_miles %}
-            <div class="monthly-row">
-                <strong><p>{{ month_name }}</p></strong>
-                <p> | </p>
-                <p>{{ miles }} miles</p>
-            </div>
+
+        {% if run_monthly_miles %}
+            {% for month_num, month_name, miles in run_monthly_miles %}
+                <div class="monthly-row">
+                    <strong>{{ month_name }}</strong>
+                    <p> | </p>
+                    <p>{{ miles }} Miles Run</p>
+                </div>
             {% endfor %}
-        {% else %}
+        {% endif %}
+
+        {% if walk_monthly_miles %}
+            {% for month_num, month_name, miles in walk_monthly_miles %}
+                <div class="monthly-row">
+                    <strong>{{ month_name }}</strong>
+                    <p> | </p>
+                    <p>{{ miles }} Miles Walked</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if not run_monthly_miles and not walk_monthly_miles %}
             <p class="empty-message">Log a run to see your monthly totals!</p>
         {% endif %}
     </div>
