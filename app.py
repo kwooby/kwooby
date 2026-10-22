@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, session, redirect, flash, url_for
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import send_from_directory
 import cloudinary
 import cloudinary.uploader
 
@@ -73,7 +74,7 @@ def create_table():
 
 @app.route("/")
 def index():
-    return render_template('portfolio/index.html')
+    return render_template("portfolio/react-index.html")
 
 @app.route("/about")
 def about():
