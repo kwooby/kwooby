@@ -80,6 +80,10 @@ def index():
 def about():
     return render_template('portfolio/about.html')
 
+@app.route("/mile-tracker")
+def mile_tracker():
+    return redirect(url_for("dashboard"))
+
 # MILE-TRACKER CODE #
 
 @app.route("/mile-tracker/register_user", methods=["GET", "POST"])
