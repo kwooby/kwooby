@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+        {% block page_css %}{% endblock %}
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial=scale=1.0">
+        <title>{% block title %}{% endblock %} | Kwooby</title>
+    </head>
+
+    <body>
+        <header class="mile-tracker-header">
+            <a class="brand" href="https://www.kwooby.com/">Back to<span> kwooby</span>.</a>
+
+            <ul class="nav">
+                <nav class="nav-links" aria-label="Main navigation">
+                    {% if session.get("authenticated") %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                        <a href="{{  url_for('runs_history') }}">History</a>
+                        <a href="{{ url_for('settings') }}">Settings</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">Login</a>
+                        <a href="{{ url_for('register_user') }}">Register</a>
+                    {% endif %}
+                </nav>
+            </ul>
+
+        </header>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="mile-tracker-footer">
+            <a class="brand" href="dashboard">kwooby<span>.</span> Alex Davis</a>
+            <p>Mile tracker web application built with Flask.</p>
+            <a href="#dashboard">Back up!</a>
+        </footer>
+
+        <script src="{{ url_for('static', filename='mile-tracker.js') }}"></script>
+    </body>
+</html>

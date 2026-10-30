@@ -70,6 +70,7 @@ def create_table():
 
         connection.commit()
 
+
 # PAGE ROUTES #
 
 @app.route("/")
@@ -261,6 +262,48 @@ def delete_run(run_id):
 
     return redirect("/mile-tracker/dashboard")
 
+@app.route("/edit_run/<int:run_id>", methods=["POST"])
+def edit_run(run_id):
+    if not session.get("authenticated") or "user_id" not in session:
+        return redirect(url_for('login'))
+
+    activity = request.form.get("activity")
+    miles = request.form.get("miles")
+    run_date = request.form.get("run_date")
+
+    if activity not in ("run", "walk") or not run_date:
+        flash("Please provide a valid activity and date.")
+        return redirect("/mile-tracker/dashboard")
+
+    try:
+        miles = float(miles)
+        if miles <= 0:
+            raise ValueError
+    except (TypeError, ValueError):
+        flash("Miles must be a positive number.")
+        return redirect("/mile-tracker/dashboard")
+
+    with get_db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                UPDATE runs
+                SET activity = %s,
+                    miles= %s,
+                    run_date = %s
+                WHERE id = %s AND user_id = %s
+            """, (
+                activity,
+                miles,
+                run_date,
+                run_id,
+                session["user_id"]    
+            ))
+
+        connection.commit()
+
+    flash("Activity updated.")
+    return redirect("/mile-tracker/dashboard")
+
 @app.route("/log-details", methods=["POST"])
 def log_details():
     if not session.get("authenticated") or "user_id" not in session:
@@ -370,9 +413,9 @@ def delete_photo(photo_id):
     flash("Photo deleted.")
     return redirect(url_for('dashboard'))
 
-def get_runs(user_id, activity=None, page=1, history=False, year=None):
+def get_runs(user_id, activity=None, page=1, history=False, year=None, per_page=9):
     
-    runs_per_page = 6
+    runs_per_page = per_page
     offset = (page - 1) * runs_per_page
 
     where_clauses = ["user_id = %s"]
@@ -394,17 +437,13 @@ def get_runs(user_id, activity=None, page=1, history=False, year=None):
         ORDER BY run_date DESC
     """
 
-    if not history:
-        sql += " LIMIT %s OFFSET %s"
-        params.extend([runs_per_page + 1, offset])
+    sql += " LIMIT %s OFFSET %s"
+    params.extend([runs_per_page + 1, offset])
 
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute(sql, tuple(params))
             runs = cursor.fetchall()
-
-    if history:
-        return runs
 
     has_next_runs = len(runs) > runs_per_page
 
@@ -437,7 +476,7 @@ def get_photos(user_id, page=1):
         
     return photos, has_next_photo
 
-def get_total_miles(user_id):
+def get_total_miles(user_id, activity=None):
     
     with get_db_connection() as connection:
         with connection.cursor() as cursor:
@@ -445,7 +484,8 @@ def get_total_miles(user_id):
                 SELECT SUM(miles) AS total_miles
                 FROM runs
                 WHERE user_id = %s
-            """, (user_id,))
+                AND (%s IS NULL OR activity = %s)
+            """, (user_id, activity, activity))
 
             row = cursor.fetchone()
             total_miles = row["total_miles"]
@@ -543,6 +583,7 @@ def runs_history():
 
     activity = request.args.get("activity")
     selected_year = request.args.get("year") or None
+    run_page = request.args.get("run_page", 1, type=int)
 
     if selected_year == "":
         selected_year = None
@@ -550,21 +591,67 @@ def runs_history():
     years = get_available_years(user_id)
     total_miles = get_total_miles(user_id)
 
-    runs = get_runs(
+    runs, has_next_runs = get_runs(
         user_id,
         activity,
+        run_page,
         history=True,
-        year=selected_year
+        year=selected_year,
+        per_page=18
         )
 
     for run in runs:
         run["formatted_date"] = run["run_date"].strftime("%b %d, %Y")
 
+    total_run_miles = get_total_miles(user_id, "run")
+    total_walk_miles = get_total_miles(user_id, "walk")
+
+    run_monthly_miles = get_monthly_miles(
+        user_id,
+        year=selected_year,
+        activity="run"
+    )
+
+    walk_monthly_miles = get_monthly_miles(
+        user_id,
+        year=selected_year,
+        activity="walk"
+    )
+
+    monthly_totals = {}
+
+    for month_num, month_name, miles in run_monthly_miles:
+        monthly_totals[month_num] = {
+            "month_name": month_name,
+            "run_miles": miles,
+            "walk_miles": 0    
+        }
+
+    for month_num, month_name, miles in walk_monthly_miles:
+        if month_num not in monthly_totals:
+            monthly_totals[month_num] = {
+                "month_name": month_name,
+                "run_miles": 0,
+                "walk_miles": miles
+            }
+        else:
+            monthly_totals[month_num]["walk_miles"] = miles
+
+    monthly_totals = [
+        {"month_num": month_num, **totals}
+        for month_num, totals in sorted(monthly_totals.items())
+    ]
+
     return render_template(
         "mile-tracker/runs-history.html",
         runs=runs,
         user=display_user,
+        run_page=run_page,
+        has_next_runs=has_next_runs,
         total_miles=total_miles,
+        total_run_miles=total_run_miles,
+        total_walk_miles=total_walk_miles,
+        monthly_totals=monthly_totals,
         selected_year=selected_year,
         years=years,
         )
@@ -608,10 +695,11 @@ def dashboard():
 
     total_miles = get_total_miles(user_id)
 
-    # Get list of years that have runs for this user so UI can present options
+    total_run_miles = get_total_miles(user_id, "run")
+    total_walk_miles = get_total_miles(user_id, "walk")
+
     years = get_available_years(user_id)
 
-    # Compute monthly aggregation restricted to the selected year and activity
     run_monthly_miles = get_monthly_miles(
         user_id,
         year=selected_year,
@@ -624,6 +712,30 @@ def dashboard():
         activity="walk"
     )
 
+    monthly_totals = {}
+
+    for month_num, month_name, miles in run_monthly_miles:
+        monthly_totals[month_num] = {
+            "month_name": month_name,
+            "run_miles": miles,
+            "walk_miles": 0    
+        }
+
+    for month_num, month_name, miles in walk_monthly_miles:
+        if month_num not in monthly_totals:
+            monthly_totals[month_num] = {
+                "month_name": month_name,
+                "run_miles": 0,
+                "walk_miles": miles
+            }
+        else:
+            monthly_totals[month_num]["walk_miles"] = miles
+
+    monthly_totals = [
+        {"month_num": month_num, **totals}
+        for month_num, totals in sorted(monthly_totals.items())
+    ]
+
     return render_template(
         "mile-tracker/dashboard.html",
         runs=runs,
@@ -634,8 +746,9 @@ def dashboard():
         has_next_runs=has_next_runs,
         has_next_photo=has_next_photo,
         total_miles=total_miles,
-        run_monthly_miles=run_monthly_miles,
-        walk_monthly_miles=walk_monthly_miles,
+        total_run_miles=total_run_miles,
+        total_walk_miles= total_walk_miles,
+        monthly_totals=monthly_totals,
         selected_year=selected_year,
         years=years
     )
@@ -658,4 +771,4 @@ def settings():
 create_table()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

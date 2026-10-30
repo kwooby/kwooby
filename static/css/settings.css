@@ -1,0 +1,144 @@
+.settings-section {
+    width: min(1100px, 100% - 48px);
+    margin-inline: auto;
+
+    padding-block: 10px;
+    border-top: solid 1px var(--border);
+}
+
+input {
+    width: max-content;
+    padding: 4px;
+    font: inherit;
+
+    border: solid 1px #9dd8cb;
+    border-radius: 6px;
+
+    background-color: #c1fcef;
+}
+
+/* === SETTINGS === */
+
+.settings-section {
+    display: grid;
+    grid-template-columns: 2fr;
+
+    border-bottom: solid 1px #9dd8cb;
+}
+
+.settings-options-section {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 40px;
+}
+
+.change-username-section {
+    background: var(--ocean-hover);
+    color: var(--border-lite);
+
+    border-radius: 6px;
+    border: 5px solid transparent;
+    padding: 10px 20px;
+}
+
+.change-username-section p {
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    font-weight: 550;
+}
+
+.username-span {
+    font-weight: 650;
+    color: var(--background)
+}
+
+.change-username-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.change-username-form label {
+    font-weight: 550;
+}
+
+.change-username-form .button {
+    align-self: center;
+}
+
+.delete-account-section {
+    background: var(--border-lite);
+    border-radius: 6px;
+
+    padding: 15px;
+}
+
+.delete-account-section p {
+    font-weight: 550;
+    letter-spacing: -0.02em;
+}
+
+.delete-account-section h3 {
+    color: rgb(255, 67, 67);
+    font-weight: 700;
+
+    
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    margin-top: 0;
+}
+
+.button {
+    color: var(--border-lite);
+    background: var(--text);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    gap: 10px;
+    padding: 4px 6px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    font-size: 0.9rem;
+    font-weight: 650;
+    text-decoration: none;
+
+    transition: 
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    background: var(--ocean);
+}
+
+
+.change-username-button {
+    background: var(--background);
+    color: var(--ocean);
+}
+
+.change-username-button:hover {
+    color: var(--border-lite)
+}
+
+.delete-button {
+    color: var(--border-lite)
+}
+
+.delete-button:hover {
+    background: rgb(255, 67, 67);
+    color: #FFF;
+}
+
+.button-container {
+    justify-self: center;
+    margin-top: 20px;
+}

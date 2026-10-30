@@ -1,10 +1,14 @@
-{% extends 'portfolio/base.html' %}
+{% extends 'mile-tracker/base.html' %}
 
 {% block title %}Settings{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}" />
+{% endblock %}
+
 {% block content %}
 
-<section class="settings-landing">
+<section class="settings-section">
     <h1>Settings</h1>
 
     <div class="flash-message">
@@ -17,44 +21,51 @@
         {% endwith %}
     </div>
 
-</section>
+    <div class="settings-options-section">
 
-<section class="settings-options">
-    <div class="change-username-section">
-        <h3>Your current username is {{ user.capitalize() }}</h3>
+        <section class="change-username-section">
+            <h2>Change Username</h2>
+            <p>Your current username is <span class="username-span">{{ user.capitalize() }}</span></p>
 
-        <div class="change-username-container">
+            <div class="change-username">
 
-            <form class="change-username" action="{{ url_for('change_username') }}" method="POST">
+                <form class="change-username-form" action="{{ url_for('change_username') }}" method="POST">
 
-                <div class="one">
-                    <label for="change-username">Change Username: </label>
-                    <input id="change-username" name="change-username" type="text" required>
+                    <div class="one">
+                        <label for="change-username">Your New Username: </label>
+                        <input id="change-username" name="change-username" type="text" required>
+                    </div>
+
+
+                    <div class="two">
+                        <label for="current-password">Your Current Password:</label>
+                        <input id="change-current-password" name="current-password" type="password" required>
+                    </div>
+
+                    <button class="button change-username-button" type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="delete-account-section">
+            <h2>Delete Account</h2>
+            <h3>DANGER ZONE!</h3>
+
+            <p>Deleting your account will permanently remove your runs and photos.</p>
+            <p>This action cannot be undone.</p>
+
+            <form class="delete-account-form" action="{{ url_for('delete_account') }}" method="POST">
+                <label for="current-password">Current Password:</label>
+                <input id="delete-current-password" name="delete-current-password" type="password" required>
+
+                <div class="button-container">
+                    <button class="button delete-button" type="submit">Delete Account</button>
                 </div>
-
-
-                <div class="two">
-                    <label for="current-password">Current Password:</label>
-                    <input id="change-current-password" name="current-password" type="password" required>
-                </div>
-
-                <button type="submit">Submit</button>
             </form>
-        </div>
-    </div>
+        </section>
 
-    <div class="delete-account-section">
-        <h3>DANGER ZONE!</h3>
+    </section>
 
-        <p>Deleting your account will permanently remove your runs and photos. This action cannot be undone.</p>
-
-        <form class="delete-account" action="{{ url_for('delete_account') }}" method="POST">
-            <label for="current-password">Current Password:</label>
-            <input id="delete-current-password" name="delete-current-password" type="password" required>
-
-            <button class="delete-account-button" type="submit">Delete Account</button>
-        </form>
-    </div>
 </section>
 
 {% endblock %}

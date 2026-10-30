@@ -4,23 +4,129 @@
 
 ## CURRENT STATUS
 
-Current State
+Current State: IN RE-PRODUCTION
+    - Full redesign in progress
+    - This is a temporary development enviroment I am using to refactor and redesign my mile-tracker web app!
+    - I told you I'd be back after i was done with the Hub c:< and I have so much more KNOWLEDGE
 
-    -Deployment: Complete
+## 10/30/2026
 
-    -Authentication: Complete
+NOTES:
 
-    -Gallery: Complete
+    - Redesign for all pages has been finished*
+        * Still need to test the pictures once live
+    - Made footer sticky
+        - Tried making it a fixed footer but I did not like it, sticky feels much better
 
-    -Cloudinary: Complete
+## 10/29/2026
 
-    -Postgres: Complete
+NOTES:
 
-    -Dashboard: Complete
+    - Add `editRun(id)` script to facilitate inline editing for all input values (editmode)
+        - All three fields are editable
+        - Edit button switches between edit and save depending on if user is in the editing form
+        - Flask route is ready to recieve updated values
+        - TEST OK
+    - Add delete run button
+        - Just needed to add jinja html since the delete run logic is already there
+        - TEST OK CONINUE
+    - Add cancel button in edit mode
+        - This one gave me a rough time
+        - Logic implemented quickly, css making me want to eat my keyboard
+        - 45 minutes of debugging later, buttons are stacked properly in and outside edit mode
+            - A lot of containers and css restrictions to make it work
+    - Dashboard redesign done (allegedly) c:
+    - Added run and walk totals to all history page in order to display them in relevant areas
+    - All history redesign done (allegedly) c:
+    - Mobile layouts done:
+        - Dashboard: GOOD
+        - All History: GOOD
 
-    -Settings: Complete
+NEXT:
 
-## Debug Notes
+    - Finish redesign for rest of pages:
+        - Login
+        - Register
+        - Settings
+    - Connect to portfolio without compromising backend data
+    
+## 10/28/2026
+
+NOTES:
+
+    - Really good progress today
+    - Total run miles and total walk miles have been separated as well as the monthly totals being streamlined
+        - Added activity params to the `get_total_miles` function
+        - Adjusted monthlies to be a dictionary containing all runs, get with `monthly_totals` dict
+    - Dashboard redesign 90% done!**
+        - *Cannot test that the photos work until I connect to cloudinary
+        - *Need to add delete and edit buttons to history runs
+            - Will have to figure out a non-invasice way to set up the edit run
+            - Perhaps on edit the text becomes editable? Think on it.
+        - Doing basic testing until then, will go more in depth in final stages
+        - Made Activity History show 9 most recent runs rather than 6 since the design allows it
+
+NEXT:
+    - Add delete button to recent history runs
+    - Add `edit_run` to recent history runs
+        - Need to build the function still in `app.py`
+        - Need to figure out easiest and least invasive way to edit items without it taking up an unnecessary amount of space
+    - After all that is done, move to `All History` page redesign
+        - I'm thinking I want this page to mimic either the monthly totals or the compressed summary, still unsure which
+        - I guess it could be both on one page?
+
+## 10/27/2026
+
+NOTES:
+
+    - One comma was ruining my day c':
+    - Realized I need to actually put data in to test it correctly
+        - Adding a couple sections in the hopes it works after giving it data
+        - I realize what is going on now
+
+    - Monthly miles code only grabs the amount of miles by each month, I was looking at the wrong this the entire time
+        - I need to get the total amount of miles of all time, one is run miles one is walk miles
+        - This is going to be in just total miles, I just need to separate by activity like I did with the monthly totals
+        - I think there should also be an option to reset the miles! Might just be good considering Katie is using it to track how many miles are on her shoes as well
+    
+    - The log activity is looking good and works as expected, not much else to say
+    - Activity by month:
+        - I only got around to adding the filter selection before straying to mess around with the total walk/run at the hero
+
+NEXT:
+    - Continue working on redesign
+    - Clean and add to app.py as needed
+    - Make sure all sections work as intended after redesign!
+
+    - Fix walk/run totals at hero not loading correctly
+
+## 10/26/2026
+
+NOTES:
+    - Enviroment is connected to a temporary development database on Render just to test while the web app is still live and working
+    - Katie is actively using the mile tracker, so it's imperitive that we keep that data safe, therefore a separate testing branch on a separate testing database seemed
+    best bet
+
+    -'ashboard.html' is the old dashboard file (lol)
+        - I wanted to keep is as a reference of the placing of things since I enjoyed how that was structured
+        - Will delete when done referencing
+    - Currently working on redesigning the landing section (now correctly renamed 'hero-section')
+        - Honestly, it's looking really nice
+        - Following the same design motifs as the folio seems to be the way to go, just making the design to fit the tracker's section structure
+    
+    - Seems like there's a disconnect for the run and walk totals in the frontend
+        - I am not surprised at this, I will probably come into a lot of messiness in the backend app.py while I redesign
+        - This was my first shot at a full stack application after all
+        - That's definitely something that will need to be looked at before moving to the other sections down the dashboard
+    - The colors are feeling good too c:
+        - Doing ocean/mermaid themes in the root because Katie loves mermaids
+        - I'm liking this like warm ocean/seaweed kind of vibe its got going on tbh
+    - This is probably going to take a lot longer than I'm thinking since there are 4 other pages I need to redesign but its okay
+        - Honestly, the only page that needs a HUGE revamp is the Dashboard, so once that's done I actually expect the rest to go quite quickly
+
+NEXT:
+    - Continue working on Dahboard/Hero Section
+    - Fix total miles for each activity not showing before continuing onto next section once done with hero
 
 .
 08/04/2026

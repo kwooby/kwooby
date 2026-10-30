@@ -1,0 +1,156 @@
+
+/* === GLOBAL PAGE LAYOUT === */
+
+:root {
+    font-family: "Segoe UI", sans-serif;
+
+    color: #232729;
+    background: rgb(127, 255, 223);
+
+    --background: rgb(127, 255, 223);
+    --text: #232729;
+    --text-muted: #2c3f3f;
+    --border: #95d8c9;
+    --border-lite: #b2ffee;
+    --mermaid: #28b687;
+    --ocean: #007a62;
+    --ocean-hover:#0cb493;
+    --link-hover:#8ebbb9;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+
+    font-optical-sizing: auto;
+    font-weight: 300;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 500px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 22px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+    max-width: 100%;
+}
+
+main {
+    flex: 1;
+}
+
+body,
+button,
+a {
+    font-family: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    color: var(--text);
+    background: var(--ocean-hover);
+}
+
+:focus-visible {
+    outline: 1px solid var(--ocean-hover);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* === HEADER & NAVIGATION === */
+
+.mile-tracker-header,
+.mile-tracker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-block: 15px;
+    border-bottom: 1px solid var(--border);
+
+    width: min(1100px, 100% - 48px);
+    margin-inline: auto;
+}
+
+.brand {
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 750;
+    letter-spacing: -0.06em;
+    text-decoration: none;
+}
+
+.brand span,
+.section-heading h2 span {
+    color: var(--ocean);
+}
+
+.nav li {
+    list-style: none;
+    align-items: flex-end;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a,
+.mile-tracker-footer > a:last-child {
+    color: var(--text-muted);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.mile-tracker-footer > a:last-child:hover {
+    color: var(--ocean);
+}
+
+/* === FLASH === */
+.flash {
+    justify-items: center;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.flash-message-register {
+    font-weight: bold;
+    padding: 5px;
+    justify-items: center;
+}
+
+.empty-message {
+    text-align: center;
+    margin-top: 15px;
+    padding: 8px;
+    border: solid 1px #a1bbbb;
+    border-radius: 5px;
+    width: 100%;
+    grid-column: 1 / -1;
+}

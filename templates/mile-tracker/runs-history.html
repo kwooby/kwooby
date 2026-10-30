@@ -1,54 +1,150 @@
-{% extends 'portfolio/base.html' %}
+{% extends 'mile-tracker/base.html' %}
 
 {% block title %}All History{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/runs-history.css') }}">
+{% endblock %}
+
 {% block content %}
 
-<section class="history">
-    <h2>History | Total: {{ total_miles }} Miles</h2>
+<div class="flash">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}<p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 
-    <div class="all-history-container">
+<section class="hero-section">
 
-        <div class="history-filters">
-            <form method="GET" action="{{ url_for('runs_history') }}">
-                
-                <div class="filter-rows">
-                    <label for="activity-filter">Filter by Activity</label>
-                    <select name="activity" id="activity-filter">
-                        <option value="">All</option>
-                        <option value="run" {% if activity == "run" %}selected{% endif %}>Run</option>
-                        <option value="walk" {% if activity == "walk" %}selected{% endif %}>Walk</option>
-                    </select>
-                </div>
+    <div class="hero-header">
+        <h1><span class="hero-span">Your </span>History<span class="hero-span">.</span></h1>
 
-                <div clss="filter-rows">
-                <label for="year-filter">Filter by Year</label>
-                    <select name="year" id="year-filter">
-                        <option value="">All Years</option>
-
-                        {% for y in years %}
-                            <option value="{{ y }}" {% if selected_year == y|string %}selected{% endif %}>{{ y }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit">Show</button>
-            </form>
+        <div class="p-container">
+            <p>Total: {{ total_miles }} Miles</p>
+            <p>{{ total_run_miles }} Run | {{ total_walk_miles }} Walked</p>
         </div>
+    </div>
 
-        {% for run in runs%}
-            <div class="all-info-container">
-                <strong><p>{{ run["activity"].capitalize() }}</p></strong>
-                <p>{{ run["miles"] }} Miles</p>
-                <p>{{ run["formatted_date"] }}</p>
-
-                <form class="delete-run-form" action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
-                    <button class="delete-button" type="submit">Delete</button>
-                </form>
+    <div class="filters">
+        <form method="GET" action="{{ url_for('runs_history') }}">
+            
+            <div class="filter-rows">
+                <label for="activity-filter">Filter by Activity</label>
+                <select name="activity" id="activity-filter">
+                    <option value="">All</option>
+                    <option value="run" {% if activity == "run" %}selected{% endif %}>Run</option>
+                    <option value="walk" {% if activity == "walk" %}selected{% endif %}>Walk</option>
+                </select>
             </div>
 
+            <div clss="filter-rows">
+            <label for="year-filter">Filter by Year</label>
+                <select name="year" id="year-filter">
+                    <option value="">All Years</option>
+
+                    {% for y in years %}
+                        <option value="{{ y }}" {% if selected_year == y|string %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="button" type="submit">Show</button>
+        </form>
+    </div>
+</section>
+
+<section class="all-history-section">
+    <div class="all-history" id="all-history">
+        {% for run in runs %}
+            <div class="history-details" id="run-{{ run['id'] }}">
+                <h3 class="run-date-display">{{ run["formatted_date"] }}</h3>
+                <p class="activity-display">{{ run["activity"].capitalize() }}</p>
+                <p class="text-display">|</p>
+                <p class="miles-display">{{ run["miles"] }} Miles</p>
+
+                <div class="edit-activity-buttons">
+                    <form action="{{ url_for('edit_run', run_id=run['id']) }}" method="POST">
+
+                        <input 
+                            type="date"
+                            name="run_date"
+                            value="{{ run['run_date'] }}"
+                            hidden
+                        />
+
+                        <select name="activity" hidden>
+                            <option value="run" {% if run["activity"] == "run" %}selected{% endif %}>
+                                Run
+                            </option>
+
+                            <option value="walk" {% if run["activity"] == "walk" %}selected{% endif %}>
+                                Walk
+                            </option>
+                        </select>
+
+                        <input 
+                            type="number" 
+                            name="miles" 
+                            value="{{ run['miles'] }}"
+                            hidden
+                        />
+
+                        <div class="edit-buttons">
+                            <button 
+                                type="button" 
+                                class="button edit-button" 
+                                id="edit-button-{{ run['id'] }}"
+                                onClick="editRun({{ run['id'] }})"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                type="button"
+                                class="button cancel-button"
+                                id="cancel-button-{{ run['id'] }}"
+                                onclick="cancelEditRun({{ run['id'] }})"
+                                hidden>
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+
+                    <form action="{{ url_for('delete_run', run_id=run['id']) }}" method="POST">
+                        <button 
+                        type="submit" 
+                        class="button delete-run-button"
+                        id="delete-button-{{ run['id'] }}"
+                        >
+                            Delete
+                        </button>
+                    </form>
+                </div>
+
+            </div>
         {% else %}
-            <p class="empty-message">You haven't logged any activity yet! Log your first run on the <a href="{{ url_for('dashboard') }}">Dashboard</a> to get started.</p>
+            <p class="empty-message">
+                You haven't logged any activity yet! Log your first run to get started.
+            </p>
         {% endfor %}
+    </div>
+
+    <div class="page-buttons">
+        {% if run_page > 1 %}
+            <a class="button page-button" href="{{ url_for('runs_history', run_page=run_page-1) }}">
+                Previous
+            </a>
+        {% endif %}
+
+        {% if has_next_runs %}
+            <a class="button page-button" href="{{ url_for('runs_history', run_page=run_page+1) }}">
+                Next
+            </a>
+        {% endif %}
     </div>
 </section>
     

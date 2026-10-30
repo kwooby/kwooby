@@ -1,0 +1,388 @@
+.hero-section,
+.log-activity-section,
+.data-by-month-section,
+.recent-summary-section,
+.gallery-section {
+    width: min(1100px, 100% - 48px);
+    margin-inline: auto;
+
+    padding-block: 10px;
+    border-top: 1px solid var(--border);
+}
+
+input,
+select {
+    width: 20%;
+    padding: 10px;
+    font: inherit;
+
+    border: 1px solid #9dd8cb;
+    border-radius: 6px;
+
+    background-color: var(--border-lite);
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* === HERO SECTION === */
+
+.hero-section {
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-block: 30px;
+}
+
+.eyebrow {
+    display: flex;
+    gap: 5px;
+    color: var(--text-muted);
+
+    font-size: 1.87rem;
+    font-weight: 700;
+
+    letter-spacing: 1.3;
+    line-height: 1.5;
+
+    margin-right: 350px;
+}
+
+.hero-section h1 {
+    max-width: 850px;
+    margin: 20px, 0;
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.75;
+    letter-spacing: -0.065em;
+}
+
+.hero-section p {
+    max-width: 570px;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.hero-name {
+    color: var(--mermaid);
+}
+
+.button {
+    color: var(--border-lite);
+    background: var(--text);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    padding: 13px 19px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    font-size: 0.9rem;
+    font-weight: 650;
+    text-decoration: none;
+
+    transition: 
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    background: var(--text);
+}
+
+.button-primary,
+.button-terciary {
+    color: var(--border-lite);
+    background: var(--ocean);
+}
+
+.button-primary:hover,
+.button-terciary:hover {
+    background: var(--ocean-hover);
+}
+
+.button-secondary,
+.button-fourth {
+    color: var(--border-lite);
+    background: var(--text);
+}
+
+.button-secondary:hover,
+.button-fourth:hover {
+    background: var(--text-muted);
+}
+
+/* === LOG ACTIVITY SECTION ===*/
+
+.log-activity {
+    display: flex;
+    gap: 10px;
+}
+
+.log-activity-section h2 {
+    font-size: 1.45rem;
+    line-height: 1.20;
+    letter-spacing: -0.05;
+}
+
+.log-activity form {
+    display: flex;
+    flex-wrap: nowrap;
+
+    gap: 10px;
+    padding-bottom: 15px;
+    place-items: center;
+
+    width: 100%;
+}
+
+.log-activity label {
+    font-size: 0.9rem;
+    line-height:1.4;
+    font-weight: 400;
+}
+
+.log-activity .button {
+    padding: 10px;
+    margin-left: 30px;
+}
+
+/* === RECENT SUMMARY === */
+
+.activity-filter-form {
+    padding-block: 10px;
+}
+
+.recent-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    background: var(--border-lite);
+    border-radius: 6px;
+}
+
+.recent-summary-details {
+    display: flex;
+    gap: 18px;
+    padding: 10px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.page-buttons {
+    display: flex;
+    justify-content: center;
+
+    gap: 10px;
+    padding-block: 10px;
+}
+
+.page-button {
+    display: flex;
+    background: var(--mermaid);
+
+    padding-block: 5px;
+    width: 70px;
+}
+
+.page-button:hover {
+    background: var(--ocean-hover);
+}
+
+.search-button {
+    color: var(--text-muted);
+    background: var(--border);
+
+    padding: 5px;
+}
+
+.search-button:hover {
+    color: var(--text);
+    background: var(--border);
+}
+
+.edit-activity-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.edit-activity-buttons form {
+    display: flex;
+
+    width: 100%;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.edit-activity-buttons form:first-child {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edit-activity-buttons form:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.edit-button,
+.delete-run-button,
+.cancel-button {
+    width: 55px;
+    padding-block: 3px;
+
+    font-size: .9rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+}
+
+.edit-button {
+    background: var(--ocean-hover);
+    color: var(--border-lite);
+}
+
+.edit-button:hover {
+    background: var(--ocean);
+    color: var(--border);
+}
+
+.delete-run-button,
+.cancel-button {
+    background: var(--text-muted);
+    color: var(--border-lite);
+}
+
+.delete-run-button:hover,
+.cancel-button:hover {
+    background: var(--text);
+    color: var(--border)
+}
+
+/* === MONTHLY BREAKDOWN === */
+
+.filter-container {
+    padding-block: 15px;
+}
+
+.monthly-breakdown-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 18px;
+
+    border-top: 1px transparent;
+    border-radius: 6px;
+
+    background: #41d1b49c;
+    color: var(--text-muted);
+}
+
+.monthly-breakdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 10px;
+    border-bottom: 1px solid var(--border-lite);
+}
+
+.monthly-breakdown h3 {
+    width: 80px;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.monthly-breakdown p {
+    font-size: 1.1rem;
+    line-height: 1.3;
+    font-weight: 400;
+    color: #d0fff5;
+}
+
+/* === GALLERY === */
+
+.log-photos-section {
+    padding-block: 10px;
+}
+
+.log-photos-section input[type="file"] {
+    background: var(--border-lite);
+    border: 1px solid transparent
+}
+
+.gallery-section .log-photo-button {
+    padding: 10px;
+    margin-left: 30px;
+}
+
+/* === MOBILE LAYOUT OVERRIDES === */
+@media (max-width: 768px) {
+    .hero-section,
+    .log-activity-section,
+    .data-by-month-section,
+    .recent-summary-section,
+    .gallery-section {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border-top: 1px solid var(--border);
+    }
+
+    .hero-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .recent-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+
+        width: 100%;
+        align-items: center;
+        border: 3px solid transparent;
+        border-radius: 6px;
+        padding: 0 20px;
+    }
+
+    .recent-summary-details {
+        gap: 10px;
+    }
+
+    .monthly-breakdown-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .monthly-breakdown:first-child {
+        flex: 1;
+    }
+}

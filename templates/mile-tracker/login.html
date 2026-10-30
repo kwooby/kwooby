@@ -1,10 +1,14 @@
-{% extends 'portfolio/base.html' %}
+{% extends 'mile-tracker/base.html' %}
 
 {% block title %}Login{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="login-landing">
-    <h1 class="welcome-title">Login</h1>
+<section class="login-section">
+    <h1>Login</h1>
     
     <div class="flash-message">
         {% with messages = get_flashed_messages() %}
@@ -16,31 +20,33 @@
         {% endwith %}
     </div>
 
-    <form class="login" action="/mile-tracker/login" method="POST">
+    <div class="login-form-container">
+        <form class="login-form" action="/mile-tracker/login" method="POST">
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" maxlength="20" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" maxlength="20" required>
 
-        <label for="password">Password:</label>
+            <label for="password">Password:</label>
 
-        <div class="form-field">
-            <input type="password" id="password" name="password" maxlength="40" required>
-            <button class= "show-password" type="button" id="show-password">
-                <i class="fa-solid fa-eye"></i>
-            </button>
-        </div>
+            <div class="form-field">
+                <input type="password" id="password" name="password" maxlength="40" required />
+                <button class="show-password" type="button" id="show-password">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
 
-        <button type="submit">Login</button>
+            <button class="button" type="submit">Login</button>
+        </form>
+    </div>
 
-    </form>
-    <br>
-
-    <p>No account?</p>
-    <a href="{{ url_for('register_user') }}">Create one to see inside!</a>
+    <div class="no-account-note">
+        <p>No account?</p>
+        <a class="register-note" href="{{ url_for('register_user') }}">Create one to see inside!</a>
+    </div>
 
     {% if error %}
         <p>{{ error }}</p>
     {% endif %}
-</div>
+</section>
 
 {% endblock %}

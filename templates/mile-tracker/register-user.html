@@ -1,6 +1,10 @@
-{% extends 'portfolio/base.html' %}
+{% extends 'mile-tracker/base.html' %}
 
 {% block title %}Create Account{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register-user.css') }}" />
+{% endblock %}
 
 {% block content %}
 
@@ -19,28 +23,28 @@
 
     <form class="register-form" method="POST">
         
-        <label>Username: </label>
+        <label>Username</label>
         <div class="form-field">
             <input name="username" type="text" maxlength="20" required>
         </div>
 
-        <label>Password: </label>
+        <label>Password</label>
         <div class="form-field">        
             <input type="password" id="password" name="password" maxlength="40" required>
-            <button class= "show-password" type="button" id="show-password">
+            <button class="show-password" type="button" id="show-password">
                 <i class="fa-solid fa-eye"></i>
             </button>
         </div>
 
-        <label>Confirm Password: </label>
+        <label>Confirm Password</label>
         <div class="form-field">
             <input type="password" id="confirm-password" name="confirm-password" maxlength="40" required>
-            <button class= "show-password" type="button" id="show-confirm-password">
+            <button class="show-password" type="button" id="show-confirm-password">
                 <i class="fa-solid fa-eye"></i>
             </button>
         </div>
 
-        <button class="register-button" type="submit">Register</button>
+        <button class="button register-button" type="submit">Register</button>
 
     </form>
 </section>
