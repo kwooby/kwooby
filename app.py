@@ -454,7 +454,7 @@ def get_runs(user_id, activity=None, page=1, history=False, year=None, per_page=
 
 def get_photos(user_id, page=1):
     
-    photos_per_page = 6
+    photos_per_page = 8
     offset = (page - 1) * photos_per_page
         
     with get_db_connection() as connection:
