@@ -1,17 +1,23 @@
 # KWOOBY'S PORTFOLIO - DEVNOTES
 
-*****TURN DEBUG OFF BEFORE DEPLOYING*****
+## CURRENT PROJECTS
 
-## CURRENT FUNCTIONAL PROJECTS
-
--Mile Tracker App
+- Mile Tracker App
+- Integration Hub Full-Stack API
 
 ## IN PROGRESS PROJECTS
 
--Integration Hub for Businesses REST API
--Hallownest REST API
+- Hallownest REST API
+- Game!!!!! :D
 
-## 10/15/2025
+## 10/30/2026
+
+    - Refactor COMPLETE! 10/17
+    - Portfolio redesign COMPLETE! 10/22
+    - Mile Tracker redesign is COMPLETE! 10/30
+    - New site is live and working 10/30
+
+## 10/15/2026
 
     - INTEGRATION HUB IS DONE!!!! 
         - Added to front page
