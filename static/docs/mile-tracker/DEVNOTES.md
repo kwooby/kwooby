@@ -10,8 +10,13 @@ Current State: App is functional and deployed.
 
 NOTES:
 
-    -Gallery layout fixed c:
+    - Dashboard gallery layout fixed c:
         - 6 per page, pagination OK
+        - Gallery css looks good on mobile as is, no other change needed for mobile dash
+    - Mobile layouts done:
+        - Settings DONE
+        - Register N/A
+        - Login N/A
 
 ## 10/30/2026
 

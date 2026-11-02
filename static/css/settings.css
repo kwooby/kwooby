@@ -142,3 +142,26 @@ input {
     justify-self: center;
     margin-top: 20px;
 }
+
+/* === MOBILE LAYOUT OVERRIDES === */
+
+@media (max-width: 768px) {
+    .settings-section {
+        width: 100%;
+        box-sizing: border-box;
+        border-top: 1px solid var(--border);
+        margin: 0;
+    }
+
+    .settings-section h1 {
+        margin-left: 40px;
+    }
+
+    .settings-options-section {
+        display: flex;
+        flex-direction: column;
+        
+        padding: 10px;
+        gap: 15px;
+    }
+}

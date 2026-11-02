@@ -408,6 +408,10 @@ select {
         border-top: 1px solid var(--border);
     }
 
+    .eyebrow {
+        margin: auto;
+    }
+
     .hero-actions {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
