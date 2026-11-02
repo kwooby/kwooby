@@ -18,7 +18,7 @@
     {% endwith %}
 </div>
 
-<section class="hero-section">
+<section class="hero-section" id="dashboard">
     <p class="eyebrow">Hello <span class="hero-name">{{ user.capitalize() }}</span>!</p>
 
     <h1 class="hero-welcome">You've logged a total of {{ total_miles }} miles.</h1>
@@ -257,12 +257,32 @@
                         action="{{ url_for('delete_photo', photo_id=photo['id']) }}"
                         method="POST"
                     >
-                        <button class="delete-photo-button" type="submit">Delete</button>
+                        <button class="button delete-photo-button" type="submit">Delete</button>
                     </form>
                 </div>
             {% else %}
                 <p class="empty-message">No photos logged yet! Upload one to get started.</p>
             {% endfor %}
+
+            <div class="page-buttons">
+                {% if photo_page > 1 %}
+                    <a 
+                        class="button page-button"
+                        href="{{ url_for('dashboard', photo_page=photo_page-1) }}"
+                    >
+                        Previous
+                    </a>
+                {% endif %}
+
+                {% if has_next_photo %}
+                    <a
+                        class="button page-button"
+                        href="{{ url_for('dashboard', photo_page=photo_page+1) }}"
+                    >
+                        Next
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </section>
 </section>

@@ -77,6 +77,8 @@ select {
     color: var(--mermaid);
 }
 
+/* === BUTTONS ===*/
+
 .button {
     color: var(--border-lite);
     background: var(--text);
@@ -126,64 +128,6 @@ select {
 .button-secondary:hover,
 .button-fourth:hover {
     background: var(--text-muted);
-}
-
-/* === LOG ACTIVITY SECTION ===*/
-
-.log-activity {
-    display: flex;
-    gap: 10px;
-}
-
-.log-activity-section h2 {
-    font-size: 1.45rem;
-    line-height: 1.20;
-    letter-spacing: -0.05;
-}
-
-.log-activity form {
-    display: flex;
-    flex-wrap: nowrap;
-
-    gap: 10px;
-    padding-bottom: 15px;
-    place-items: center;
-
-    width: 100%;
-}
-
-.log-activity label {
-    font-size: 0.9rem;
-    line-height:1.4;
-    font-weight: 400;
-}
-
-.log-activity .button {
-    padding: 10px;
-    margin-left: 30px;
-}
-
-/* === RECENT SUMMARY === */
-
-.activity-filter-form {
-    padding-block: 10px;
-}
-
-.recent-summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    background: var(--border-lite);
-    border-radius: 6px;
-}
-
-.recent-summary-details {
-    display: flex;
-    gap: 18px;
-    padding: 10px;
-
-    align-items: center;
-    justify-content: center;
 }
 
 .page-buttons {
@@ -285,6 +229,64 @@ select {
     color: var(--border)
 }
 
+/* === LOG ACTIVITY SECTION ===*/
+
+.log-activity {
+    display: flex;
+    gap: 10px;
+}
+
+.log-activity-section h2 {
+    font-size: 1.45rem;
+    line-height: 1.20;
+    letter-spacing: -0.05;
+}
+
+.log-activity form {
+    display: flex;
+    flex-wrap: nowrap;
+
+    gap: 10px;
+    padding-bottom: 15px;
+    place-items: center;
+
+    width: 100%;
+}
+
+.log-activity label {
+    font-size: 0.9rem;
+    line-height:1.4;
+    font-weight: 400;
+}
+
+.log-activity .button {
+    padding: 10px;
+    margin-left: 30px;
+}
+
+/* === RECENT SUMMARY === */
+
+.activity-filter-form {
+    padding-block: 10px;
+}
+
+.recent-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    background: var(--border-lite);
+    border-radius: 6px;
+}
+
+.recent-summary-details {
+    display: flex;
+    gap: 18px;
+    padding: 10px;
+
+    align-items: center;
+    justify-content: center;
+}
+
 /* === MONTHLY BREAKDOWN === */
 
 .filter-container {
@@ -330,6 +332,8 @@ select {
 /* === GALLERY === */
 
 .log-photos-section {
+    display: flex;
+    flex-direction: column;
     padding-block: 10px;
 }
 
@@ -341,6 +345,54 @@ select {
 .gallery-section .log-photo-button {
     padding: 10px;
     margin-left: 30px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+    gap: 5px;
+    padding: 8px;
+}
+
+.gallery > :last-child {
+    grid-column: 1 / -1;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.gallery img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.photo-card {
+    position: relative;
+}
+
+.delete-photo-button {
+    width: fit-content;
+    padding: 5px;
+
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 0;
+    transition: 
+        opacity 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.delete-photo-button:hover {
+    background: var(--ocean);
+}
+
+.photo-card:hover .delete-photo-button {
+    opacity: 1;
 }
 
 /* === MOBILE LAYOUT OVERRIDES === */
